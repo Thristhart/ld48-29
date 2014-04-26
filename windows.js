@@ -1,13 +1,23 @@
 var minimized = {};
 var windows = {};
 function openWindow(menuname) {
+	var matches = menuname.match(/([a-zA-Z]+) - (.*)+/)
+	var parameters = null;
+	if(matches) {
+		menuname = matches[1];
+		parameters = matches[2];
+	}
 	if(minimized[menuname]) {
 		$(minimized[menuname].element).show();
 		return minimized[menuname];
 	}
 	else if(!windows[menuname]) {
 		var obj = window[menuname + "FakeWindow"];
-		windows[menuname] = new obj(menuname);
+		console.log(obj);
+		if(parameters)
+			windows[menuname] = new obj(menuname, parameters);
+		else
+			windows[menuname] = new obj(menuname);
 		taskbar.addButton(windows[menuname]);
 	}
 	return windows[menuname];

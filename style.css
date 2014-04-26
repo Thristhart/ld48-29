@@ -68,7 +68,7 @@ body {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	border: 1px solid black;
-	width: 5em;
+	min-width: 5em;
 	text-align: center;
 	background-color: #c4c4c4;
 	margin-right: .3em;
@@ -134,7 +134,7 @@ body {
 	width: 100%;
 }
 
-.chat { 
+.window.friends { 
 	width: 15em;
 }
 
@@ -142,7 +142,7 @@ body {
 	margin: 0;
 	padding: 0;
 }
-.chat .friend {
+.friends .friend {
 	list-style: none;
 	border: 1px solid black;
 	border-left: none;
@@ -150,7 +150,7 @@ body {
 	height: 2em;
 	width: 100%;
 }
-.chat .friend span {
+.friends .friend span {
 	float: left;
 }
 
@@ -169,8 +169,15 @@ body {
 	color: green;
 }
 
-.chat img.profile {
+.friends img.profile {
 	width: 2em;
 	height: 2em;
 	float: left;
+}
+
+.chatlog {
+	border: 1px solid black;
+	width: 100%;
+	margin: 2em;
+	height: 80%;
 }
