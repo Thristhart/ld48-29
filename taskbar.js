@@ -8,7 +8,7 @@ Taskbar.prototype.addButton = function(window) {
 	var button = document.createElement("a");
 	var tbar = this;
 	
-	button.innerText = window.menuname;
+	button.innerHTML = window.menuname;
 	button.className = window.menuname;
 	
 	this.element.appendChild(button);

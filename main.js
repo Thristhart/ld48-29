@@ -5,7 +5,7 @@ function setup() {
 		$("#menu").toggle();
 	});
 	$("#menu li").click(function(event) {
-		openWindow(event.target.innerText);
+		openWindow(event.target.innerHTML);
 		$("#startbutton").click();
 	});
 	
