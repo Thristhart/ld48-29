@@ -8,7 +8,8 @@ friends["Handler"] = {
 
 friends["Jimmy"] = {
 	username: "Jimmy",
-	profile_picture: "jimmy.png"
+	profile_picture: "jimmy.png",
+	online: true
 };
 
 friends["John Doe"] = {

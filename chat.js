@@ -95,9 +95,22 @@ ChatFakeWindow.prototype.buildBody = function() {
 	
 	var chatWindow = this;
 	$(this.sendButton).click(function() {
+		if(!chatWindow.currResult)
+			return;
 		meMessage(chatWindow.friend, chatWindow.currResult.me);
+		if(chatWindow.currResult.event.remove_choices) {
+			for(var i = 0; i < chatWindow.currResult.event.remove_choices.length; i++) {
+				var select = "a.choice:contains(" + chatWindow.currResult.event.remove_choices[i] + ")";
+				var c = $(container).find(select);
+				c[0].removeAttribute("href");
+				if(c[0].parentElement.className == "options") // horrible hack to identify out-of-text choices
+					c[0].parentElement.removeChild(c[0]);
+				c.off("click");
+			}
+		}
 		Plot.handleAfter(chatWindow.currResult.after);
 		chatWindow.inputbox.value = "";
+		chatWindow.currResult = null;
 	});
 	
 	container.appendChild(this.friendProfile);

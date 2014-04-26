@@ -7,7 +7,7 @@ Plot.addEvent({
 		friendMessage("Handler", "We have [2]{inserted} you into a group of six suspected [1]{cyberterrorists}.");
 		friendMessage("Handler", "Our sources have reason to believe that one of them has stolen a [3]{very sensitive document} from our servers.", 5000);
 		friendMessage("Handler", "We want you to identify which one is responsible, and either neutralize them or find evidence that we can move on.");
-		friendMessage("Handler", "Welcome to the seedy underbelly beneath the surface of the Internet.");
+		friendMessage("Handler", "Welcome to the seedy underbelly beneath the surface of the Internet. Good luck.");
 	},
 	choices: {
 		1 : { 
@@ -60,7 +60,8 @@ Plot.addEvent({
 		name: "Hello",
 		me: "Sup.",
 		after: "jimmy_hi1"
-	}]
+	}],
+	remove_choices: ["Hello"]
 });
 Plot.addEvent({
 	code: "jimmy_hi1",
@@ -68,6 +69,6 @@ Plot.addEvent({
 	triggers: [],
 	execute: function() {
 		friendMessage("Jimmy", "yo");
-		friendMessage("Jimmy", "how's that kit you were working on going");
+		friendMessage("Jimmy", "how's [1]{that kit} you were working on going");
 	},
 });
