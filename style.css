@@ -1,5 +1,5 @@
 body {
-	
+	overflow: hidden;
 }
 
 #startbutton {
@@ -9,6 +9,9 @@ body {
 	position: absolute;
 	bottom: 0;
 	left: 0;
+	
+	background-color: #ff8484;
+	color: black;
 	
 	-webkit-border-top-right-radius: 100px;
 	-webkit-border-bottom-right-radius: 100px;
@@ -32,8 +35,84 @@ body {
 	
 	list-style: none;
 	padding: 0;
+	background-color: #ffaeae;
 }
 
 #menu li {
 	border-bottom: 1px solid black;
+	background-color: #ff8a8a;
+}
+
+#taskbar {
+	position: absolute;
+	width: 100%;
+	margin: 0;
+	margin-left: 2.4em;
+	z-index: -1;
+	height: 1.2em;
+	background-color: #ffaeae;
+	bottom: 0;
+}
+
+#taskbar a {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid black;
+	width: 5em;
+	text-align: center;
+	background-color: #ff8a8a;
+	margin-right: .3em;
+	float: left;
+}
+
+.window {
+	height: 10em;
+	width: 10em;
+	border: 1px solid black;
+	
+	min-width: 15em;
+	min-height: 10em;
+}
+
+.window .titlebar {
+	background-color: gray;
+	width: 100%;
+	height: 1em;
+}
+
+.titlebar .button {
+	border: 1px solid black;
+	color: white;
+	position: absolute;
+	
+	height: .5em;
+	width: .5em;
+	line-height: .4em;
+	
+	top: .2em;
+}
+.titlebar .close {
+	right: .5em;
+	background-color: red;
+}
+.titlebar .close:before {
+	content: "x";
+}
+
+.titlebar .minimize {
+	right: 1.5em;
+	background-color: red;
+}
+.titlebar .minimize:before {
+	content: "-";
+}
+
+.titlebar .maximize {
+	right: 2.5em;
+	line-height: .5em;
+	background-color: red;
+}
+.titlebar .maximize:before {
+	content: "\25aa";
 }
