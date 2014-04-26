@@ -48,6 +48,23 @@ Plot.getEventWithCode = function(code) {
 	}
 }
 
+Plot.getSelfOptions = function(friend) {
+	var opts = [];
+	for(var i = 0; i < this.events.length; i++) {
+		if(this.events[i].target == friend.username)
+		{
+			console.log(this.events[i]);
+			for(var j = 0; j < this.events[i].self_choices.length; j++) {
+				var option = this.events[i].self_choices[j];
+				option.event = this.events[i];
+				opts.push(option);
+			}
+		}
+	}
+	console.log(opts);
+	return opts;
+}
+
 Plot.handleAfter = function(after) {
 	var event = after;
 	if((typeof after) == "string") {

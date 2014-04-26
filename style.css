@@ -254,3 +254,9 @@ img.profile {
 .choice {
 	color: forestgreen;
 }
+
+.chat .options {
+	position: absolute;
+	right: 1em;
+	bottom: 3.2em;
+}

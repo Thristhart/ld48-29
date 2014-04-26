@@ -15,6 +15,7 @@ function setup() {
 }
 
 function register_ingame_links() {
+	$("a.ingame_link").off("click"); // make sure all click handlers are gone
 	$("a.ingame_link").click(function(event) {
 		goToURL(event.target.href);
 		return false;

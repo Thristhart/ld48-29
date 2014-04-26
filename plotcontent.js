@@ -50,3 +50,24 @@ Plot.addEvent({
 		friendMessage("Handler", "Just work with the fact that the document was stolen from a major installation. It should not be hard to encourage these script kiddies to brag about their score.");
 	},
 });
+Plot.addEvent({
+	code: "hi_to_jimmy",
+	prereqs: ["init"],
+	triggers: [],
+	execute: function() {},
+	target: "Jimmy",
+	self_choices: [{
+		name: "Hello",
+		me: "Sup.",
+		after: "jimmy_hi1"
+	}]
+});
+Plot.addEvent({
+	code: "jimmy_hi1",
+	prereqs: ["hi_to_jimmy"],
+	triggers: [],
+	execute: function() {
+		friendMessage("Jimmy", "yo");
+		friendMessage("Jimmy", "how's that kit you were working on going");
+	},
+});

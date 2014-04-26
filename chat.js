@@ -74,10 +74,27 @@ ChatFakeWindow.prototype.buildBody = function() {
 	this.sendButton.type = "submit";
 	this.sendButton.className = "sendMessage";
 	this.sendButton.value = "Send";
+	this.options = document.createElement("span");
+	this.options.className = "options";
+	var opts = Plot.getSelfOptions(this.friend);
+	for(var i = 0; i < opts.length; i++) {
+		var link = document.createElement("a");
+		link.href = opts[i].name;
+		link.innerHTML = opts[i].name;
+		link.className = "choice";
+		var text = opts[i].me;
+		var result = opts[i];
+		console.log(opts[i]);
+		$(link).click(function() {
+			chatWindow.inputbox.value = text;
+			chatWindow.currResult = result;
+			return false;
+		});
+		this.options.appendChild(link);
+	}
 	
 	var chatWindow = this;
 	$(this.sendButton).click(function() {
-		console.log("SEND!");
 		meMessage(chatWindow.friend, chatWindow.currResult.me);
 		Plot.handleAfter(chatWindow.currResult.after);
 		chatWindow.inputbox.value = "";
@@ -86,6 +103,7 @@ ChatFakeWindow.prototype.buildBody = function() {
 	container.appendChild(this.friendProfile);
 	container.appendChild(this.log);
 	container.appendChild(this.typingMessage);
+	container.appendChild(this.options);
 	container.appendChild(this.inputbox);
 	container.appendChild(this.sendButton);
 	return container;
@@ -101,7 +119,7 @@ ChatFakeWindow.prototype.refreshLog = function() {
 		$(chat.typingMessage).hide();
 	
 	var chatWindow = chat;
-	$(".window:contains('Chat - " + chat.friend.username + "') a.choice").click(function(event) {
+	$(".window:contains('Chat - " + chat.friend.username + "') .chatlog a.choice").click(function(event) {
 		var choice = event.target.dataset.choice;
 		var event = Plot.getEventWithCode(event.target.dataset.code);
 		var result = event.choices[choice];
@@ -118,6 +136,8 @@ function openChatWindow(friend) {
 
 function meMessage(friend, message, delay) {
 	if(!delay) delay = 4000;
+	if(!friend.log)
+		friend.log = "";
 	friend.log += "<b>Me</b>: " + message + "<br />";
 	openChatWindow(friend).refreshLog();
 }
@@ -138,12 +158,12 @@ function friendMessage(friendName, message, delay) {
 
 function processMessageMarkup(event, message) {
 	var option_reg = /\[([0-9]+)\]\{(.*?)\}/g;
-	var option_links;;
+	var option_links;
 	while(option_links = option_reg.exec(message)) {
 		var num = option_links[1];
 		var word = option_links[2];
 		var total = "[" + num + "]" + "{" + word + "}";
-		var url = "<a class='choice' data-choice=" + num + " + data-code='" + event.code + "' href='" + num + "'>" + word + "</a>"
+		var url = "<a class='choice' data-choice=" + num + " data-code='" + event.code + "' href='" + num + "'>" + word + "</a>"
 			
 		message = message.replace(total, url);
 	}
