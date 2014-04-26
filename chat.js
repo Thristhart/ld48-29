@@ -88,7 +88,6 @@ ChatFakeWindow.prototype.buildBody = function() {
 	container.appendChild(this.typingMessage);
 	container.appendChild(this.inputbox);
 	container.appendChild(this.sendButton);
-	this.refreshLog();
 	return container;
 }
 
