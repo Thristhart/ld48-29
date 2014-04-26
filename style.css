@@ -142,7 +142,16 @@ body {
 .browser .urlbar {
 	position: absolute;
 	top: 1em;
-	width: 100%;
+	right: 0;
+	width: calc(100% - 1.3em);
+}
+
+.browser .backButton {
+	position: absolute;
+	top: 1em;
+	left: 0;
+	color: black;
+	width: 1em;
 }
 
 .window.friends { 
