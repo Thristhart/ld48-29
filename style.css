@@ -142,7 +142,7 @@ body {
 	margin: 0;
 	padding: 0;
 }
-.friends .friend {
+.friend {
 	list-style: none;
 	border: 1px solid black;
 	border-left: none;
@@ -150,7 +150,7 @@ body {
 	height: 2em;
 	width: 100%;
 }
-.friends .friend span {
+.friend span {
 	float: left;
 }
 
@@ -169,7 +169,7 @@ body {
 	color: green;
 }
 
-.friends img.profile {
+img.profile {
 	width: 2em;
 	height: 2em;
 	float: left;
@@ -177,7 +177,28 @@ body {
 
 .chatlog {
 	border: 1px solid black;
-	width: 100%;
-	margin: 2em;
-	height: 80%;
+	width: calc(100% - 1em);
+	margin: .5em;
+	bottom: 3em;
+	top: 3em;
+	position: absolute;
+}
+
+.sendMessage {
+	bottom: 0;
+	position: absolute;
+	right: 0;
+	margin: .5em;
+	width: calc(20% - 1.5em);
+	height: 3em;
+}
+
+.fakeinput { 
+	bottom: 0;
+	position: absolute;
+	margin: .5em;
+	height: 3em;
+	right: 5em;
+	left: 0;
+	width: 80%;
 }

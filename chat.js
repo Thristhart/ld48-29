@@ -4,7 +4,7 @@ function FriendsFakeWindow(menuname) {
 }
 $.extend(true, FriendsFakeWindow.prototype, FakeWindow.prototype);
 
-FriendsFakeWindow.prototype.buildFriendItem = function(name) {
+function buildFriendItem(name) {
 	var item = friends[name].friendlist_elem = document.createElement("li");
 	item.className = "friend"
 	item.dataset.name = name;
@@ -24,6 +24,8 @@ FriendsFakeWindow.prototype.buildFriendItem = function(name) {
 	else
 		item.className += " offline";
 	item.appendChild(name_bar);
+	
+	return item;
 }
 FriendsFakeWindow.prototype.buildBody = function() {
 	var container = document.createElement("div");
@@ -31,7 +33,7 @@ FriendsFakeWindow.prototype.buildBody = function() {
 	this.friendslist.className = "friendslist";
 	
 	for(var name in friends) {
-		var item = this.buildFriendItem(name);
+		var item = buildFriendItem(name);
 		$(item).click(function(event) {
 			var target = event.target;
 			if(target.tagName == "SPAN")
@@ -56,10 +58,22 @@ ChatFakeWindow.prototype.buildBody = function() {
 	var container = document.createElement("div");
 	
 	this.log = document.createElement("div");
-	this.log.className = "chatlog"
-	this.log.innerHTML = this.friend.log
+	this.log.className = "chatlog";
+	this.log.innerHTML = this.friend.log;
 	
+	this.friendProfile = buildFriendItem(this.friend.username);
+	
+	this.inputbox = document.createElement("input");
+	this.inputbox.className = "fakeinput";
+	this.sendButton = document.createElement("input");
+	this.sendButton.type = "submit";
+	this.sendButton.className = "sendMessage";
+	this.sendButton.value = "Send";
+	
+	container.appendChild(this.friendProfile);
 	container.appendChild(this.log);
+	container.appendChild(this.inputbox);
+	container.appendChild(this.sendButton);
 	return container;
 }
 
