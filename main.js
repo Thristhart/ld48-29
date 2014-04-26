@@ -10,7 +10,14 @@ function setup() {
 	});
 	
 	taskbar = new Taskbar();
+	
 }
 
+function register_ingame_links() {
+	$("a.ingame_link").click(function(event) {
+		goToURL(event.target.href);
+		return false;
+	});
+}
 
 document.onready = setup;

@@ -3,18 +3,19 @@ var windows = {};
 function openWindow(menuname) {
 	if(minimized[menuname]) {
 		$(minimized[menuname].element).show();
+		return minimized[menuname];
 	}
-	else {
+	else if(!windows[menuname]) {
 		var obj = window[menuname + "FakeWindow"];
-		console.log(menuname, obj);
 		windows[menuname] = new obj(menuname);
 		taskbar.addButton(windows[menuname]);
 	}
+	return windows[menuname];
 }
 var FakeWindow = function(menuname) {
+	this.menuname = menuname;
 	this.element = this.buildElement();
 	document.body.appendChild(this.element);
-	this.menuname = menuname;
 }
 FakeWindow.prototype.buildElement = function() {
 	var window = this;
@@ -22,7 +23,7 @@ FakeWindow.prototype.buildElement = function() {
 	$(base).draggable({handle: ".titlebar", scroll: false, containment: "document"});
 	$(base).resizable();
 	
-	base.className = "window";
+	base.className = "window " + this.menuname;
 	
 	base.titlebar = document.createElement("div");
 	base.titlebar.className = "titlebar";
@@ -50,6 +51,8 @@ FakeWindow.prototype.buildElement = function() {
 	base.titlebar.appendChild(base.maximizeButton);
 	
 	base.appendChild(base.titlebar);
+	base.appendChild(this.buildBody());
+	
 	return base;
 }
 
@@ -86,8 +89,6 @@ FakeWindow.prototype.maximized = function() {
 	}
 }
 
-function BrowserFakeWindow(menuname) {
-	FakeWindow.call(this, menuname);
+FakeWindow.prototype.buildBody = function() {
+	return document.createElement("div");
 }
-$.extend(true, BrowserFakeWindow.prototype, FakeWindow.prototype);
-
