@@ -38,6 +38,7 @@ function openWindow(menuname) {
 var FakeWindow = function(menuname) {
 	this.menuname = menuname;
 	this.element = this.buildElement();
+	this.element.dataset.menuname = menuname;
 	document.body.appendChild(this.element);
 }
 FakeWindow.prototype.buildElement = function() {

@@ -80,6 +80,7 @@ ChatFakeWindow.prototype.buildBody = function() {
 		console.log("SEND!");
 		meMessage(chatWindow.friend, chatWindow.currResult.me);
 		Plot.handleAfter(chatWindow.currResult.after);
+		chatWindow.inputbox.value = "";
 	});
 	
 	container.appendChild(this.friendProfile);
@@ -87,19 +88,21 @@ ChatFakeWindow.prototype.buildBody = function() {
 	container.appendChild(this.typingMessage);
 	container.appendChild(this.inputbox);
 	container.appendChild(this.sendButton);
+	this.refreshLog();
 	return container;
 }
 
 ChatFakeWindow.prototype.refreshLog = function() {
 	this.log.innerHTML = this.friend.log || "";
-	this.log.scrollTop = this.log.scrollHeight;
-	if(this.friend.typing)
-		$(this.typingMessage).show();
+	var chat = this;
+	chat.log.scrollTop = chat.log.scrollHeight;
+	if(chat.friend.typing)
+		$(chat.typingMessage).show();
 	else
-		$(this.typingMessage).hide();
+		$(chat.typingMessage).hide();
 	
-	var chatWindow = this;
-	$(".window:contains('Chat - " + this.friend.username + "') a.choice").click(function(event) {
+	var chatWindow = chat;
+	$(".window:contains('Chat - " + chat.friend.username + "') a.choice").click(function(event) {
 		var choice = event.target.dataset.choice;
 		var event = Plot.getEventWithCode(event.target.dataset.code);
 		var result = event.choices[choice];
@@ -124,7 +127,6 @@ var messageQueue = [];
 var currentMessageInterval = null;
 function friendMessage(friendName, message, delay) {
 	var sourceEvent = arguments.callee.caller.parent; // THIS IS BY FAR THE WORST THING I'VE EVER DONE
-	console.log(sourceEvent);
 	if(!delay) delay = 4000;
 	messageQueue.push([friendName, processMessageMarkup(sourceEvent, message), delay]);
 	if(!currentMessageInterval) {

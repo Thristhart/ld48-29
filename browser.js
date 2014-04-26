@@ -37,6 +37,10 @@ BrowserFakeWindow.prototype.buildBody = function() {
 	container.appendChild(urlbar_form);
 	container.appendChild(this.backButton);
 	container.appendChild(this.body);
+	
+	$(this.element).on('show', function() {
+		console.log("show!");
+	});
 	return container;
 }
 
