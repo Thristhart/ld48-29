@@ -190,9 +190,15 @@ img.profile {
 	border: 1px solid black;
 	width: calc(100% - 1em);
 	margin: .5em;
-	bottom: 3em;
+	bottom: 4em;
 	top: 3em;
 	position: absolute;
+	overflow: auto;
+}
+.typing {
+	position: absolute;
+	left: .5em;
+	bottom: 3em;
 }
 
 .sendMessage {
@@ -212,4 +218,10 @@ img.profile {
 	right: 5em;
 	left: 0;
 	width: 80%;
+	border: 1px solid black;
+	color: black;
+	background-color: white;
+}
+.choice {
+	color: forestgreen;
 }

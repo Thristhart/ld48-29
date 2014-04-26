@@ -4,24 +4,31 @@ function openWindow(menuname) {
 	var matches = menuname.match(/([a-zA-Z]+) - (.*)+/)
 	var parameters = null;
 	var classname = menuname;
+	
+	var madeNew = false;
 	if(matches) {
 		classname = matches[1];
 		parameters = matches[2];
 	}
 	if(minimized[menuname]) {
-		$(minimized[menuname].element).show();
+		$(minimized[menuname].element).show(MAXIMIZE_MINIMIZE_ANIMATION);
+		minimized[menuname] = null;
 	}
 	else if(!windows[menuname]) {
 		var obj = window[classname + "FakeWindow"];
-		console.log(obj);
 		if(parameters)
 			windows[menuname] = new obj(menuname, parameters);
 		else
 			windows[menuname] = new obj(menuname);
 		taskbar.addButton(windows[menuname]);
+		madeNew = true;
 	}
 	var jq_win = $(windows[menuname].element);
-	console.log(jq_win);
+	
+	if(madeNew) {
+		jq_win.hide();
+		$(windows[menuname].element).show(MAXIMIZE_MINIMIZE_ANIMATION);
+	}
 	jq_win.click();
 	if(jq_win.offset().top > window.innerHeight * .8 || jq_win.offset().left > window.innerWidth * .8 ||
 	   jq_win.offset().top < 0 || jq_win.offset().left < 0)
@@ -93,7 +100,7 @@ FakeWindow.prototype.closed = function() {
 }
 
 FakeWindow.prototype.minimized = function() {
-	$(this.element).hide();
+	$(this.element).hide(MAXIMIZE_MINIMIZE_ANIMATION);
 	minimized[this.menuname] = this;
 }
 

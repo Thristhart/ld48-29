@@ -1,8 +1,9 @@
 var friends = {};
 
-friends["John"] = {
-	username: "John",
-	profile_picture: "john.png"
+friends["Handler"] = {
+	username: "Handler",
+	profile_picture: "handler.png",
+	online: true
 };
 
 friends["Jimmy"] = {
@@ -10,7 +11,7 @@ friends["Jimmy"] = {
 	profile_picture: "jimmy.png"
 };
 
-friends["xx420BigSmokerxx"] = {
-	username: "xx420BigSmokerxx",
-	profile_picture: "stoner.png"
+friends["John Doe"] = {
+	username: "John Doe",
+	profile_picture: "blah.png"
 };

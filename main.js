@@ -2,7 +2,7 @@ var taskbar;
 function setup() {
 	console.log("Hello, inquisitive mind!");
 	$("#startbutton").click(function(event) {
-		$("#menu").toggle();
+		$("#menu").toggle(STARTMENU_ANIMATION);
 	});
 	$("#menu li").click(function(event) {
 		openWindow(event.target.innerHTML);
@@ -11,6 +11,7 @@ function setup() {
 	
 	taskbar = new Taskbar();
 	
+	setInterval(function() {Plot.checkEvents()}, 1000);
 }
 
 function register_ingame_links() {

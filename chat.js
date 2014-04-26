@@ -59,24 +59,130 @@ ChatFakeWindow.prototype.buildBody = function() {
 	
 	this.log = document.createElement("div");
 	this.log.className = "chatlog";
-	this.log.innerHTML = this.friend.log;
+	
+	this.typingMessage = document.createElement("span");
+	this.typingMessage.className = "typing";
+	this.typingMessage.innerHTML = this.friend.username + " is typing...";
+	this.refreshLog();
 	
 	this.friendProfile = buildFriendItem(this.friend.username);
 	
 	this.inputbox = document.createElement("input");
 	this.inputbox.className = "fakeinput";
+	this.inputbox.disabled = true;
 	this.sendButton = document.createElement("input");
 	this.sendButton.type = "submit";
 	this.sendButton.className = "sendMessage";
 	this.sendButton.value = "Send";
 	
+	var chatWindow = this;
+	$(this.sendButton).click(function() {
+		console.log("SEND!");
+		meMessage(chatWindow.friend, chatWindow.currResult.me);
+		Plot.handleAfter(chatWindow.currResult.after);
+	});
+	
 	container.appendChild(this.friendProfile);
 	container.appendChild(this.log);
+	container.appendChild(this.typingMessage);
 	container.appendChild(this.inputbox);
 	container.appendChild(this.sendButton);
 	return container;
 }
 
+ChatFakeWindow.prototype.refreshLog = function() {
+	this.log.innerHTML = this.friend.log || "";
+	this.log.scrollTop = this.log.scrollHeight;
+	if(this.friend.typing)
+		$(this.typingMessage).show();
+	else
+		$(this.typingMessage).hide();
+	
+	var chatWindow = this;
+	$(".window:contains('Chat - " + this.friend.username + "') a.choice").click(function(event) {
+		var choice = event.target.dataset.choice;
+		var event = Plot.getEventWithCode(event.target.dataset.code);
+		var result = event.choices[choice];
+		chatWindow.inputbox.value = result.me;
+		chatWindow.currResult = result;
+		return false;
+	});
+	register_ingame_links();
+}
+
 function openChatWindow(friend) {
-	openWindow("Chat - " + friend.username);
+	return openWindow("Chat - " + friend.username);
+}
+
+function meMessage(friend, message, delay) {
+	if(!delay) delay = 4000;
+	friend.log += "<b>Me</b>: " + message + "<br />";
+	openChatWindow(friend).refreshLog();
+}
+
+var messageQueue = [];
+var currentMessageInterval = null;
+function friendMessage(friendName, message, delay) {
+	var sourceEvent = arguments.callee.caller.parent; // THIS IS BY FAR THE WORST THING I'VE EVER DONE
+	console.log(sourceEvent);
+	if(!delay) delay = 4000;
+	messageQueue.push([friendName, processMessageMarkup(sourceEvent, message), delay]);
+	if(!currentMessageInterval) {
+		currentMessageInterval = setTimeout(processMessageQueue, delay);
+	}
+	friends[friendName].typing = true;
+	openChatWindow(friends[friendName]).refreshLog();
+	return;
+}
+
+function processMessageMarkup(event, message) {
+	var option_reg = /\[([0-9]+)\]\{(.*?)\}/g;
+	var option_links;;
+	while(option_links = option_reg.exec(message)) {
+		var num = option_links[1];
+		var word = option_links[2];
+		var total = "[" + num + "]" + "{" + word + "}";
+		var url = "<a class='choice' data-choice=" + num + " + data-code='" + event.code + "' href='" + num + "'>" + word + "</a>"
+			
+		message = message.replace(total, url);
+	}
+	var browser_reg = /\((.*?)\)\[(.*?)\]/g;
+	var browser_links;
+	while(browser_links = browser_reg.exec(message)) {
+		var href = browser_links[1];
+		var word = browser_links[2];
+		var total = "(" + href + ")" + "[" + word + "]";
+		var url = "<a class='ingame_link' href='" + href + "'>" + word + "</a>"
+		message = message.replace(total, url);
+	}
+	return message;
+}
+
+function processMessageQueue() {
+	currentMessageInterval = null;
+	if(messageQueue.length == 0) return;
+	var msg = messageQueue.shift();
+	var friendName = msg[0];
+	var message = msg[1];
+	var delay = msg[2];
+	var friend = friends[friendName];
+	if(!friend.log)
+		friend.log = "";
+	friend.log += buildChatFriendName(friend) + message + "<br />";
+	
+	
+	var anyLeft = false;
+	for(var i = 0; i < messageQueue.length; i++) {
+		if(messageQueue[i][0] == friendName)
+			anyLeft = true;
+	}
+	if(!anyLeft) friends[friendName].typing = false;
+	
+	openChatWindow(friend).refreshLog();
+	if(messageQueue.length > 0)
+		currentMessageInterval = setTimeout(processMessageQueue, messageQueue[0][2]);
+}
+
+function buildChatFriendName(friend) {
+	return "<b>" + friend.username + "</b>: ";
 }
