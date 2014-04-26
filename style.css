@@ -1,5 +1,14 @@
 body {
 	overflow: hidden;
+	background: rgb(255,255,255); /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,255,255,1)), color-stop(47%,rgba(246,246,246,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
 }
 
 #startbutton {
@@ -10,7 +19,7 @@ body {
 	bottom: 0;
 	left: 0;
 	
-	background-color: #ff8484;
+	background-color: white;
 	color: black;
 	
 	-webkit-border-top-right-radius: 100px;
@@ -35,22 +44,22 @@ body {
 	
 	list-style: none;
 	padding: 0;
-	background-color: #ffaeae;
+	background-color: #dedede;
 }
 
 #menu li {
 	border-bottom: 1px solid black;
-	background-color: #ff8a8a;
+	background-color: #c4c4c4;
 }
 
 #taskbar {
 	position: absolute;
 	width: 100%;
 	margin: 0;
-	margin-left: 2.4em;
+	margin-left: 2em;
 	z-index: -1;
-	height: 1.2em;
-	background-color: #ffaeae;
+	height: 1.1em;
+	background-color: #dedede;
 	bottom: 0;
 }
 
@@ -61,18 +70,20 @@ body {
 	border: 1px solid black;
 	width: 5em;
 	text-align: center;
-	background-color: #ff8a8a;
+	background-color: #c4c4c4;
 	margin-right: .3em;
 	float: left;
 }
 
 .window {
-	height: 10em;
-	width: 10em;
+	height: 20em;
+	width: 25em;
 	border: 1px solid black;
 	
 	min-width: 15em;
 	min-height: 10em;
+	
+	background-color: white;
 }
 
 .window .titlebar {
@@ -115,4 +126,36 @@ body {
 }
 .titlebar .maximize:before {
 	content: "\25aa";
+}
+
+.browser .urlbar {
+	position: absolute;
+	top: 1em;
+	width: 100%;
+}
+
+.chat { 
+	width: 15em;
+}
+
+.friendslist {
+	margin: 0;
+	padding: 0;
+}
+.chat .friend {
+	list-style: none;
+	border: 1px solid black;
+	border-left: none;
+	border-right: none;
+	height: 2em;
+	width: 100%;
+}
+.chat .friend span {
+	float: left;
+}
+
+.chat img.profile {
+	width: 2em;
+	height: 2em;
+	float: left;
 }
