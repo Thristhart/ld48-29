@@ -22,6 +22,8 @@ body {
 	background-color: white;
 	color: black;
 	
+	z-index: 201;
+	
 	-webkit-border-top-right-radius: 100px;
 	-webkit-border-bottom-right-radius: 100px;
 	-moz-border-radius-topright: 100px;
@@ -45,6 +47,7 @@ body {
 	list-style: none;
 	padding: 0;
 	background-color: #dedede;
+	z-index: 201;
 }
 
 #menu li {
@@ -57,10 +60,11 @@ body {
 	width: 100%;
 	margin: 0;
 	margin-left: 2em;
-	z-index: -1;
 	height: 1.1em;
 	background-color: #dedede;
 	bottom: 0;
+	
+	z-index: 200;
 }
 
 #taskbar a {
@@ -84,12 +88,19 @@ body {
 	min-height: 10em;
 	
 	background-color: white;
+	
+	float: left;
 }
+
 
 .window .titlebar {
 	background-color: #e8e8e8;
 	width: 100%;
 	height: 1em;
+}
+
+.ui-draggable-dragging {
+	z-index: 101 !important;
 }
 
 .titlebar .button {

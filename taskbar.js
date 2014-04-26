@@ -2,7 +2,7 @@ function Taskbar() {
 	this.element = $("#taskbar")[0];
 }
 Taskbar.prototype.buttonClicked = function(button) {
-	$(windows[button.className].element).show();
+	openWindow(button.innerHTML);
 }
 Taskbar.prototype.addButton = function(window) {
 	var button = document.createElement("a");
@@ -19,7 +19,8 @@ Taskbar.prototype.addButton = function(window) {
 }
 
 Taskbar.prototype.removeButton = function(window) {
-	var butt = $("#taskbar ." + window.menuname)[0]
+	var selector = "#taskbar :contains('" + window.menuname + "')";
+	var butt = $(selector)[0]
 	taskbar.element.removeChild(butt);
 	delete(butt);
 }
