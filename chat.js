@@ -22,6 +22,12 @@ ChatFakeWindow.prototype.buildBody = function() {
 		profile_pic.className = "profile";
 		item.appendChild(profile_pic);
 		
+		if(friends[name].online) {
+			item.className += " online";
+		}
+		else
+			item.className += " offline";
+		
 		item.appendChild(name_bar);
 		this.friendslist.appendChild(item);
 	}

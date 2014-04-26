@@ -154,6 +154,21 @@ body {
 	float: left;
 }
 
+.friend.offline:after {
+    content: ' \25CF';
+    font-size: 2em;
+	position: absolute;
+	right: 0;
+	color: grey;
+}
+.friend.online:after {
+    content: ' \25CF';
+    font-size: 2em;
+	position: absolute;
+	right: 0;
+	color: green;
+}
+
 .chat img.profile {
 	width: 2em;
 	height: 2em;
