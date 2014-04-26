@@ -98,7 +98,7 @@ ChatFakeWindow.prototype.buildBody = function() {
 		if(!chatWindow.currResult)
 			return;
 		meMessage(chatWindow.friend, chatWindow.currResult.me);
-		if(chatWindow.currResult.event.remove_choices) {
+		if(chatWindow.currResult.event && chatWindow.currResult.event.remove_choices) {
 			for(var i = 0; i < chatWindow.currResult.event.remove_choices.length; i++) {
 				var select = "a.choice:contains(" + chatWindow.currResult.event.remove_choices[i] + ")";
 				var c = $(container).find(select);
