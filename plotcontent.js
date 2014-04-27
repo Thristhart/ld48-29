@@ -165,6 +165,49 @@ Plot.addEvent({
 	}
 });
 Plot.addEvent({
+	code: "wherez_hello",
+	prereqs: [Plot.not_run("group_wherez_totally_legit")],
+	triggers: [],
+	execute: function() {
+	},
+	target: "Wherez",
+	self_choices: [{
+		name: "Hello",
+		me: "Hello there.",
+		after: "wherez_greeting"
+	}]
+});
+Plot.addEvent({
+	code: "wherez_greeting",
+	prereqs: [Plot.not_run("group_wherez_totally_legit")],
+	triggers: [],
+	execute: function() {
+		friendMessage("Wherez", "Hello, [1]{agent} (name)");
+	},
+	target: "Wherez",
+	choices: {
+		1 : {
+			me: "How did you know I'm an agent?",
+			after: "wherez_told"
+		}
+	}
+});
+Plot.addEvent({
+	code: "wherez_told",
+	prereqs: ["wherez_greeting"],
+	triggers: [],
+	execute: function() {
+		friendMessage("Wherez", "Hello, [1]{agent} (name)");
+	},
+	target: "Wherez",
+	choices: {
+		1 : {
+			me: "How did you know I'm an agent?",
+			after: "wherez_told"
+		}
+	}
+});
+Plot.addEvent({
 	code: "wherez_my_cover",
 	prereqs: ["group_wherez_totally_legit"],
 	triggers: [],
@@ -349,7 +392,7 @@ Plot.addEvent({
 			after: "skiddy_taunt"
 		},
 		2: {
-			me: "For you, I'm made of time. Let's hear it.",
+			me: "I'm made of time. Let's hear it.",
 			after: "skiddy_story"
 		}
 	}
