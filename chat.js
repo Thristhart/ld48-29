@@ -91,7 +91,7 @@ ChatFakeWindow.prototype.buildBody = function() {
 				}
 				if(e.self_choices) {
 					for(var k in e.self_choices) {
-						e.remove_choices.push(k.name);
+						e.remove_choices.push(e.self_choices[k].name);
 					}
 				}
 			}
