@@ -1,11 +1,11 @@
 bodies = {
-	"sneakyweb.com": "<h2>Welcome to SneakyWeb!</h2><p>The best in no-nonsense, minimal web browsing.</p>\
+	"sneaky.link": "<h2>Welcome to SneakyLink!</h2><p>The best in no-nonsense, minimal web browsing.</p>\
 		Some useful information:\
 		<ul>\
-		<li><a href='http://sneakyweb.com/cover' class='ingame_link'>Cover identity</a></li>\
-		<li><a href='http://sneakyweb.com/profiles' class='ingame_link'>Case profiles</a></li>\
+		<li><a href='http://sneaky.link/cover' class='ingame_link'>Cover identity</a></li>\
+		<li><a href='http://sneaky.link/profiles' class='ingame_link'>Case profiles</a></li>\
 		</ul>",
-	"sneakyweb.com/profiles": "\
+	"sneaky.link/profiles": "\
 	<h2>Case Profiles</h2> \
 	<div class='case_profile'> \
 	<h4>RiceBeans2001</h4> \
@@ -50,7 +50,7 @@ bodies = {
 	<p>Unemployed.</p>\
 	</div>\
 	",
-	"sneakyweb.com/cover": "<h4>Your cover identity</h4>\
+	"sneaky.link/cover": "<h4>Your cover identity</h4>\
 	<p>You are an overworked programmer for our front company, Deadline Web Services.</p>\
 	<p>You have agreed to steal penetration testing tools from your company. You have these tools available to send via your chat client. These tools, though fully functional, have been heavily bugged by our tech guys. Keep in mind that a suspicious enough skilled hacker could easily identify the tainted program, and your cover would be blown.</p>\
 	",

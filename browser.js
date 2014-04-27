@@ -1,5 +1,5 @@
 function BrowserFakeWindow(menuname) {
-	this.url = "sneakyweb.com";
+	this.url = "sneaky.link";
 	this.history = [];
 	FakeWindow.call(this, menuname);
 	register_ingame_links();

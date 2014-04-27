@@ -37,7 +37,7 @@ Plot.addEvent({
 	prereqs: ["init"],
 	triggers: [],
 	execute: function() {
-		friendMessage("Handler", "They're all various petty hackers and script kiddies. None should be a threat. Check out their (http://sneakyweb.com/profiles)[case profiles].");
+		friendMessage("Handler", "They're all various petty hackers and script kiddies. None should be a threat. Check out their (http://sneaky.link/profiles)[case profiles].");
 		friendMessage("Handler", "Once you're done reading up, start interacting with them and get this done, ASAP.");
 	},
 });
@@ -46,7 +46,7 @@ Plot.addEvent({
 	prereqs: ["init"],
 	triggers: [],
 	execute: function() {
-		friendMessage("Handler", "Yes. Take a look at your (http://sneakyweb.com/cover)[cover identity].");
+		friendMessage("Handler", "Yes. Take a look at your (http://sneaky.link/cover)[cover identity].");
 	},
 });
 Plot.addEvent({
