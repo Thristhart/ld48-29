@@ -2,7 +2,7 @@ function Taskbar() {
 	this.element = $("#taskbar")[0];
 }
 Taskbar.prototype.buttonClicked = function(button) {
-	openfakeWindow(button.innerHTML);
+	openWindow(button.innerHTML);
 }
 Taskbar.prototype.addButton = function(fakeWindow) {
 	var button = document.createElement("a");

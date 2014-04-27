@@ -124,7 +124,7 @@ ChatFakeWindow.prototype.buildBody = function() {
 	
 	return container;
 }
-ChatFakeWindow.prototype.reRender = function() { }
+ChatFakeWindow.prototype.reRender = function() {this.friendProfile.innerHTML = buildFriendItem(this.friend.username).innerHTML; this.refreshLog()}
 
 ChatFakeWindow.prototype.refreshLog = function() {
 	this.log.innerHTML = this.friend.log || "";
@@ -247,7 +247,17 @@ function processMessageQueue() {
 		var friend = friends[friendName];
 		if(!friend.log)
 			friend.log = "";
-		friend.log += buildChatFriendName(friend) + message + "<br />";
+		
+		var connector = " ";
+		if(message.match(/^\/me/)) {
+			message = message.replace("/me", "");
+			message += "</i>";
+			friend.log += "<i>";
+		}
+		else {
+			connector = ": ";
+		}
+		friend.log += buildChatFriendName(friend) + connector + message + "<br />";
 		
 		
 		var anyLeft = false;
@@ -263,5 +273,5 @@ function processMessageQueue() {
 }
 
 function buildChatFriendName(friend) {
-	return "<b>" + friend.username + "</b>: ";
+	return "<b>" + friend.username + "</b>";
 }
