@@ -165,6 +165,91 @@ Plot.addEvent({
 	}
 });
 Plot.addEvent({
+	code: "wherez_my_cover",
+	prereqs: ["group_wherez_totally_legit"],
+	triggers: [],
+	execute: function() {
+		friendMessage("Wherez", "Yes, my [3]{cover}!.");
+		friendMessage("Wherez", "I've been gaining their trust for months now.");
+		friendMessage("Wherez", "[1]{My people} told me you'd be coming weeks ago.");
+		friendMessage("Wherez", "Didn't your people [2]{tell you?}");
+	},
+	choices: {
+		1: {
+			me: "Who are your people?",
+			after: "wherez_my_people",
+		},
+		2: {
+			me: "I'm beginning to think there's a lot of things I wasn't told.",
+			after: "wherez_details"
+		},
+		3: {
+			me: "Your cover is flimsy and obvious. How have they not figured you out?",
+			after: "wherez_obvious"
+		}
+	}
+});
+Plot.addEvent({
+	code: "wherez_obvious",
+	prereqs: ["wherez_my_cover"],
+	triggers: [],
+	execute: function() {
+		friendMessage("Wherez", "Then explain to me how [1]{they haven't figured out for months now}?");
+		friendMessage("Wherez", "My cover is rock-solid. They all love me!");
+		friendMessage("Wherez", "Haven't you been [2]{reading my status reports?}");
+	},
+	choices: {
+		1: {
+			me: "What makes you so sure they haven't figured it out?",
+			after: "wherez_they're_criminals"
+		},
+		2: {
+			me: "Apparently not. What do they say?",
+			after: "wherez_details",
+		},
+	}
+});
+Plot.addEvent({
+	code: "wherez_they're_criminals",
+	prereqs: ["wherez_obvious"],
+	triggers: [],
+	execute: function() {
+		friendMessage("Wherez", "Because I'm still alive!");
+		friendMessage("Wherez", "These are hardened criminals. You know what they do to moles like me?");
+		friendMessage("Wherez", "Actually, that's a good point. We should avoid direct contact if we can.");
+		friendMessage("Wherez", "Don't respond to this message.");
+	},
+});
+Plot.addEvent({
+	code: "wherez_my_people",
+	prereqs: ["wherez_my_cover"],
+	triggers: [],
+	execute: function() {
+		friendMessage("Wherez", "The Department of Digital Infiltration?");
+		friendMessage("Wherez", "We've been sending your department status updates for years.");
+		friendMessage("Wherez", "Don't you guys [1]{read those}?");
+	},
+	choices: {
+		1: {
+			me: "Apparently not. What do they say?",
+			after: "wherez_details",
+		},
+	}
+});
+Plot.addEvent({
+	code: "wherez_details",
+	prereqs: ["wherez_my_cover"],
+	triggers: [],
+	execute: function() {
+		friendMessage("Wherez", "We've been sending you guys details about this group for a while.");
+		friendMessage("Wherez", "lassyfair and Barcelona have a long-standing feud, but I think they secretly respect each other.");
+		friendMessage("Wherez", "I'm a hundred percent confident HatSama is a guy, by the way.");
+		friendMessage("Wherez", "This one we're less sure about, but my pet theory is that plood is perfectly fluent - he just chooses to speak like that.");
+		friendMessage("Wherez", "And I think RiceBeans2001 is just plood's alt. Makes sense, doesn't it?");
+		friendMessage("Wherez", "Anyway, I'm cutting off contact. We don't know eachother. Do not respond.");
+	}
+});
+Plot.addEvent({
 	code: "group_news",
 	prereqs: ["group_greetings"],
 	triggers: [],
