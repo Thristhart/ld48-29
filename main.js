@@ -11,7 +11,7 @@ function setup() {
 	
 	taskbar = new Taskbar();
 	
-	setInterval(function() {Plot.checkEvents()}, 1000);
+	setInterval(function() {Plot.checkEvents()}, 500);
 }
 
 function register_ingame_links() {

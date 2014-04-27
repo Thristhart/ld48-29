@@ -67,8 +67,40 @@ Plot.addEvent({
 	code: "jimmy_hi1",
 	prereqs: ["hi_to_jimmy"],
 	triggers: [],
+	target: "Jimmy",
 	execute: function() {
 		friendMessage("Jimmy", "yo");
 		friendMessage("Jimmy", "how's [1]{that kit} you were working on going");
 	},
+	self_choices: [{
+		name: "How about you?",
+		me: "Forget about that. You manage anything great recently?",
+		after: "jimmy_manage"
+	}],
+	choices: {
+		1 : { 
+			me: "That kit is going great. Works like a charm.",
+			after: "jimmy_kit"
+		},
+	},
+	remove_choices: [1, "How about you?"]
+});
+Plot.addEvent({
+	code: "jimmy_manage",
+	prereqs: ["jimmy_hi1"],
+	triggers: [],
+	execute: function() {
+		friendMessage("Jimmy", "dude i've got so much goin on right now");
+		friendMessage("Jimmy", "you don't wanna hear about it it's a friggin novel");
+		friendMessage("Jimmy", "unless you got a lot of time on your hands");
+	}
+});
+Plot.addEvent({
+	code: "jimmy_kit",
+	prereqs: ["jimmy_hi1"],
+	triggers: [],
+	execute: function() {
+		friendMessage("Jimmy", "yo hook me up");
+		friendMessage("Jimmy", "i'm always down for beta testing");
+	}
 });

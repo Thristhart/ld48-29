@@ -38,7 +38,6 @@ FriendsFakeWindow.prototype.buildBody = function() {
 			var target = event.target;
 			if(target.tagName == "SPAN")
 				target = target.parentElement;
-			console.log(target);
 			openChatWindow(friends[target.dataset.name]);
 		});
 		this.friendslist.appendChild(item);
@@ -63,7 +62,6 @@ ChatFakeWindow.prototype.buildBody = function() {
 	this.typingMessage = document.createElement("span");
 	this.typingMessage.className = "typing";
 	this.typingMessage.innerHTML = this.friend.username + " is typing...";
-	this.refreshLog();
 	
 	this.friendProfile = buildFriendItem(this.friend.username);
 	
@@ -76,22 +74,6 @@ ChatFakeWindow.prototype.buildBody = function() {
 	this.sendButton.value = "Send";
 	this.options = document.createElement("span");
 	this.options.className = "options";
-	var opts = Plot.getSelfOptions(this.friend);
-	for(var i = 0; i < opts.length; i++) {
-		var link = document.createElement("a");
-		link.href = opts[i].name;
-		link.innerHTML = opts[i].name;
-		link.className = "choice";
-		var text = opts[i].me;
-		var result = opts[i];
-		console.log(opts[i]);
-		$(link).click(function() {
-			chatWindow.inputbox.value = text;
-			chatWindow.currResult = result;
-			return false;
-		});
-		this.options.appendChild(link);
-	}
 	
 	var chatWindow = this;
 	$(this.sendButton).click(function() {
@@ -100,15 +82,19 @@ ChatFakeWindow.prototype.buildBody = function() {
 		meMessage(chatWindow.friend, chatWindow.currResult.me);
 		if(chatWindow.currResult.event && chatWindow.currResult.event.remove_choices) {
 			for(var i = 0; i < chatWindow.currResult.event.remove_choices.length; i++) {
-				var select = "a.choice:contains(" + chatWindow.currResult.event.remove_choices[i] + ")";
+				var select = "a.choice[href='" + chatWindow.currResult.event.remove_choices[i] + "']";
 				var c = $(container).find(select);
 				c[0].removeAttribute("href");
 				if(c[0].parentElement.className == "options") // horrible hack to identify out-of-text choices
 					c[0].parentElement.removeChild(c[0]);
 				c.off("click");
 			}
+			// save our changes
+			chatWindow.friend.log = chatWindow.log.innerHTML;
 		}
-		Plot.handleAfter(chatWindow.currResult.after);
+		chatWindow.currResult.event.finished = true;
+		chatWindow.currResult.event.option_selected = true;
+		Plot.handleAfter(chatWindow.currResult);
 		chatWindow.inputbox.value = "";
 		chatWindow.currResult = null;
 	});
@@ -119,6 +105,8 @@ ChatFakeWindow.prototype.buildBody = function() {
 	container.appendChild(this.options);
 	container.appendChild(this.inputbox);
 	container.appendChild(this.sendButton);
+	this.refreshLog();
+	
 	return container;
 }
 
@@ -126,10 +114,14 @@ ChatFakeWindow.prototype.refreshLog = function() {
 	this.log.innerHTML = this.friend.log || "";
 	var chat = this;
 	chat.log.scrollTop = chat.log.scrollHeight;
-	if(chat.friend.typing)
+	if(chat.friend.typing) {
 		$(chat.typingMessage).show();
-	else
+		$(chat.options).hide();
+	}
+	else {
 		$(chat.typingMessage).hide();
+		$(chat.options).show();
+	}
 	
 	var chatWindow = chat;
 	$(".window:contains('Chat - " + chat.friend.username + "') .chatlog a.choice").click(function(event) {
@@ -138,8 +130,26 @@ ChatFakeWindow.prototype.refreshLog = function() {
 		var result = event.choices[choice];
 		chatWindow.inputbox.value = result.me;
 		chatWindow.currResult = result;
+		chatWindow.currResult.event = event;
 		return false;
 	});
+	chatWindow.options.innerHTML = ""; // make sure we don't manage to re-add options
+	var opts = Plot.getSelfOptions(this.friend);
+	for(var i = 0; i < opts.length; i++) {
+		var link = document.createElement("a");
+		link.href = opts[i].name;
+		link.innerHTML = opts[i].name;
+		link.className = "choice";
+		var text = opts[i].me;
+		var result = opts[i];
+		$(link).click(function() {
+			chatWindow.inputbox.value = text;
+			chatWindow.currResult = result;
+			return false;
+		});
+		chatWindow.options.appendChild(link);
+		Plot.triggerEvent(opts[i].event);
+	}
 	register_ingame_links();
 }
 
@@ -158,14 +168,20 @@ function meMessage(friend, message, delay) {
 var messageQueue = [];
 var currentMessageInterval = null;
 function friendMessage(friendName, message, delay) {
-	var sourceEvent = arguments.callee.caller.parent; // THIS IS BY FAR THE WORST THING I'VE EVER DONE
-	if(!delay) delay = 4000;
-	messageQueue.push([friendName, processMessageMarkup(sourceEvent, message), delay]);
+	if(!delay) delay = 1000;
+	if(friendName == "FINISHEVENT") // terrible hack to finish events after the last message
+	{
+		messageQueue.push([friendName, message, delay]);
+	}
+	else {
+		var sourceEvent = arguments.callee.caller.parent; // THIS IS BY FAR THE WORST THING I'VE EVER DONE
+		messageQueue.push([friendName, processMessageMarkup(sourceEvent, message), delay]);
+		friends[friendName].typing = true;
+		openChatWindow(friends[friendName]).refreshLog();
+	}
 	if(!currentMessageInterval) {
 		currentMessageInterval = setTimeout(processMessageQueue, delay);
 	}
-	friends[friendName].typing = true;
-	openChatWindow(friends[friendName]).refreshLog();
 	return;
 }
 
@@ -199,20 +215,26 @@ function processMessageQueue() {
 	var friendName = msg[0];
 	var message = msg[1];
 	var delay = msg[2];
-	var friend = friends[friendName];
-	if(!friend.log)
-		friend.log = "";
-	friend.log += buildChatFriendName(friend) + message + "<br />";
-	
-	
-	var anyLeft = false;
-	for(var i = 0; i < messageQueue.length; i++) {
-		if(messageQueue[i][0] == friendName)
-			anyLeft = true;
+	if(friendName == "FINISHEVENT") {
+		message.finished = true;
+		if(message.target)
+			openChatWindow(friends[message.target]).refreshLog();
 	}
-	if(!anyLeft) friends[friendName].typing = false;
-	
-	openChatWindow(friend).refreshLog();
+	else {
+		var friend = friends[friendName];
+		if(!friend.log)
+			friend.log = "";
+		friend.log += buildChatFriendName(friend) + message + "<br />";
+		
+		
+		var anyLeft = false;
+		for(var i = 0; i < messageQueue.length; i++) {
+			if(messageQueue[i][0] == friendName)
+				anyLeft = true;
+		}
+		if(!anyLeft) friends[friendName].typing = false;
+		openChatWindow(friend).refreshLog();
+	}
 	if(messageQueue.length > 0)
 		currentMessageInterval = setTimeout(processMessageQueue, messageQueue[0][2]);
 }

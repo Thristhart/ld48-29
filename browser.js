@@ -48,7 +48,6 @@ BrowserFakeWindow.prototype.back = function() {
 }
 
 BrowserFakeWindow.prototype.getBody = function() {
-	console.log(this.url);
 	if(this.url.indexOf("http") != -1) {
 		var parser = document.createElement('a');
 		parser.href = this.url;
