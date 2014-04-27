@@ -72,6 +72,10 @@ Plot.getEventWithCode = function(code) {
 		if(this.events[i].code == code)
 			return this.events[i];
 	}
+	for(var i = 0; i < this.runningEvents.length; i++) {
+		if(this.runningEvents[i].code == code)
+			return this.runningEvents[i];
+	}
 	for(var i = 0; i < this.finishedEvents.length; i++) {
 		if(this.finishedEvents[i].code == code)
 			return this.finishedEvents[i];
