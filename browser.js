@@ -33,6 +33,7 @@ BrowserFakeWindow.prototype.buildBody = function() {
 	
 	this.body = document.createElement("div");
 	this.body.innerHTML = this.getBody();
+	this.body.className = "browserBody";
 	
 	container.appendChild(urlbar_form);
 	container.appendChild(this.backButton);
