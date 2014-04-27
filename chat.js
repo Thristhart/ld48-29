@@ -204,7 +204,7 @@ function meMessage(window, message, delay) {
 	window.refreshLog();
 }
 
-var DEFAULT_DELAY = 4000;
+var DEFAULT_DELAY = 3000;
 var messageQueue = [];
 var currentMessageInterval = null;
 function friendMessage(friendName, message, delay) {
