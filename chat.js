@@ -155,7 +155,7 @@ ChatFakeWindow.prototype.refreshLog = function() {
 	}
 	
 	var chatWindow = chat;
-	$(".window:contains('Chat - " + chat.friend.username + "') .chatlog a.choice").click(function(event) {
+	$(this.element).find(".chatlog a.choice").click(function(event) {
 		var choice = event.target.dataset.choice;
 		var event = Plot.getEventWithCode(event.target.dataset.code);
 		console.log(choice, event);
@@ -203,10 +203,11 @@ function meMessage(window, message, delay) {
 	window.refreshLog();
 }
 
+var DEFAULT_DELAY = 4000;
 var messageQueue = [];
 var currentMessageInterval = null;
 function friendMessage(friendName, message, delay) {
-	if(!delay) delay = 1000;
+	if(!delay) delay = DEFAULT_DELAY;
 	if(friendName == "FINISHEVENT") // terrible hack to finish events after the last message
 	{
 		messageQueue.push([friendName, message, delay]);
@@ -224,10 +225,11 @@ function friendMessage(friendName, message, delay) {
 }
 
 function groupMessage(friendName, message, delay) {
-	if(!delay) delay = 1000;
+	if(!delay) delay = DEFAULT_DELAY;
 
 	var sourceEvent = arguments.callee.caller.parent; // THIS IS BY FAR THE WORST THING I'VE EVER DONE
 	messageQueue.push([friendName, processMessageMarkup(sourceEvent, message), delay, true]);
+	friends["Group"].typing = true;
 	if(!currentMessageInterval) {
 		currentMessageInterval = setTimeout(processMessageQueue, delay);
 	}
@@ -285,6 +287,12 @@ function processMessageQueue() {
 			}
 			group.friend.log += buildChatFriendName(friend) + connector + message + "<br />";
 			
+			var anyLeft = false;
+			for(var i = 0; i < messageQueue.length; i++) {
+				if(messageQueue[i][3])
+					anyLeft = true;
+			}
+			if(!anyLeft) friends["Group"].typing = false;
 			group.refreshLog();
 		}
 		else {	
@@ -302,13 +310,13 @@ function processMessageQueue() {
 			}
 			friend.log += buildChatFriendName(friend) + connector + message + "<br />";
 			
-			
 			var anyLeft = false;
 			for(var i = 0; i < messageQueue.length; i++) {
-				if(messageQueue[i][0] == friendName)
+				if(messageQueue[i][0] == friendName && !messageQueue[i][3])
 					anyLeft = true;
 			}
 			if(!anyLeft) friends[friendName].typing = false;
+			
 			openChatWindow(friend).refreshLog();
 		}
 	}

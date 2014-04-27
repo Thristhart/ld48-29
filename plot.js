@@ -92,7 +92,9 @@ Plot.getSelfOptions = function(friend) {
 	for(var i = 0; i < events.length; i++) {
 		if(!Plot.checkPrereqs(events[i]))
 			continue;
-		if(events[i].target == friend.username)
+		if(!events[i].autorun && !events[i].triggeredByEvent)
+			continue;
+		if(events[i].target == friend.username && events[i].self_choices)
 		{
 			for(var j = 0; j < events[i].self_choices.length; j++) {
 				var option = events[i].self_choices[j];
@@ -109,6 +111,7 @@ Plot.handleAfter = function(event) {
 	if((typeof after) == "string") {
 		after = this.getEventWithCode(after);
 	}
+	after.triggeredByEvent = true;
 	this.triggerEvent(after);
 }
 
