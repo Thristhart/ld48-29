@@ -232,7 +232,7 @@ function groupMessage(friendName, message, delay) {
 	messageQueue.push([friendName, processMessageMarkup(sourceEvent, message), delay, true]);
 	friends["Group"].typing = true;
 	if(!currentMessageInterval) {
-		currentMessageInterval = setTimeout(processMessageQueue, delay);
+		currentMessageInterval = setTimeout(processMessageQueue, delay * 1 + (.25 * Math.random()) - .125);
 	}
 }
 
@@ -324,7 +324,7 @@ function processMessageQueue() {
 		}
 	}
 	if(messageQueue.length > 0)
-		currentMessageInterval = setTimeout(processMessageQueue, messageQueue[0][2]);
+		currentMessageInterval = setTimeout(processMessageQueue, messageQueue[0][2] * 1 + (.25 * Math.random()) - .125);
 }
 
 function buildChatFriendName(friend) {
