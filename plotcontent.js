@@ -15,7 +15,7 @@ Plot.addEvent({
 		friends["plood"].online = true;
 		friends["lassyfair"].online = true;
 		friends["Wherez"].online = true;
-		friends["Hatsama"].online = true;
+		friends["HatSama"].online = true;
 	},
 	choices: {
 		1 : { 
