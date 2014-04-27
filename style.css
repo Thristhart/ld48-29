@@ -215,6 +215,18 @@ img.profile {
 	float: left;
 }
 
+.friend .name {
+	margin: .5em;
+	margin-bottom: 0em;
+}
+
+.browser .browserBody {
+	top: 2.3em;
+	overflow: auto;
+	position: absolute;
+	bottom: 0;
+}
+
 .chatlog {
 	border: 1px solid black;
 	width: calc(100% - 1em);
