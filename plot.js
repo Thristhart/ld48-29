@@ -120,15 +120,23 @@ Plot.handleAfter = function(event) {
 Plot.checkPrereqs = function(event) {
 	if(!event.prereqs)
 		return true;
+	if
 	for(var i = 0; i < event.prereqs.length; i++) {
-		var foundIt = false;
-		for(var j = 0; j < this.finishedEvents.length; j++) {
-			if(this.finishedEvents[j].code == event.prereqs[i]) {
-				foundIt = true;
+		if((typeof event.prereqs[i]) == "string") {
+			var foundIt = false;
+			for(var j = 0; j < this.finishedEvents.length; j++) {
+				if(this.finishedEvents[j].code == event.prereqs[i]) {
+					foundIt = true;
+				}
 			}
+			if(!foundIt)
+				return false;
 		}
-		if(!foundIt)
-			return false;
+		else {
+			var result = event.prereqs[i]();
+			if(!result)
+				return false;
+		}
 	}
 	return true;
 }
