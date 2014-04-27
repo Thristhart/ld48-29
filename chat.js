@@ -133,7 +133,10 @@ ChatFakeWindow.prototype.buildBody = function() {
 	
 	return container;
 }
-ChatFakeWindow.prototype.reRender = function() {this.friendProfile.innerHTML = buildFriendItem(this.friend.username).innerHTML; this.refreshLog()}
+ChatFakeWindow.prototype.reRender = function() {
+	this.friendProfile.outerHTML = buildFriendItem(this.friend.username).outerHTML;
+	this.refreshLog()
+}
 
 ChatFakeWindow.prototype.refreshLog = function() {
 	this.log.innerHTML = this.friend.log || "";
