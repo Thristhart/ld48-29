@@ -77,10 +77,10 @@ Plot.addEvent({
 	prereqs: ["group_hello"],
 	triggers: [],
 	execute: function() {
-		groupMessage("Barcelona", "Hello.");
-		groupMessage("lassyfair", "heyyy");
-		groupMessage("plood", "here.");
-		groupMessage("HatSama", "Hey... ^_^");
+		groupMessage("Barcelona", "Hello.", 1000);
+		groupMessage("lassyfair", "heyyy", 1000);
+		groupMessage("plood", "here.", 1000);
+		groupMessage("HatSama", "Hey... ^_^", 1000);
 	},
 	target: "Group",
 	self_choices: [{
