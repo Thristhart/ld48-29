@@ -9,6 +9,13 @@ Plot.addEvent({
 		friendMessage("Handler", "We want you to identify which one is responsible, and either neutralize them or find evidence that we can move on.");
 		friendMessage("Handler", "Welcome to the seedy underbelly beneath the surface of the Internet. Good luck.");
 	},
+	after: function() {
+		friends["RiceBeans2001"].online = true;
+		friends["Barcelona"].online = true;
+		friends["plood"].online = true;
+		friends["lassyfair"].online = true;
+		friends["Wherez"].online = true;
+	},
 	choices: {
 		1 : { 
 			me: "Cyberterrorists? How dangerous are they?",
@@ -22,7 +29,8 @@ Plot.addEvent({
 			me: "What's this very sensitive document?",
 			after: "handler_document"
 		}
-	}
+	},
+	remove_choices: []
 });
 Plot.addEvent({
 	code: "handler_cyberterror",
@@ -51,56 +59,74 @@ Plot.addEvent({
 	},
 });
 Plot.addEvent({
-	code: "hi_to_jimmy",
+	code: "hi_to_skiddy",
 	prereqs: ["init"],
 	triggers: [],
 	execute: function() {},
-	target: "Jimmy",
+	target: "RiceBeans2001",
 	self_choices: [{
 		name: "Hello",
 		me: "Sup.",
-		after: "jimmy_hi1"
-	}],
-	remove_choices: ["Hello"]
+		after: "skiddy_hi1"
+	}]
 });
 Plot.addEvent({
-	code: "jimmy_hi1",
-	prereqs: ["hi_to_jimmy"],
+	code: "skiddy_hi1",
+	prereqs: ["hi_to_skiddy"],
 	triggers: [],
-	target: "Jimmy",
+	target: "RiceBeans2001",
 	execute: function() {
-		friendMessage("Jimmy", "yo");
-		friendMessage("Jimmy", "how's [1]{that kit} you were working on going");
+		friendMessage("RiceBeans2001", "yo");
+		friendMessage("RiceBeans2001", "how's [1]{that kit} you were working on going");
 	},
 	self_choices: [{
 		name: "How about you?",
 		me: "Forget about that. You manage anything great recently?",
-		after: "jimmy_manage"
+		after: "skiddy_manage"
 	}],
 	choices: {
 		1 : { 
 			me: "That kit is going great. Works like a charm.",
-			after: "jimmy_kit"
+			after: "skiddy_kit"
 		},
 	},
-	remove_choices: [1, "How about you?"]
 });
 Plot.addEvent({
-	code: "jimmy_manage",
-	prereqs: ["jimmy_hi1"],
+	code: "skiddy_manage",
+	prereqs: ["skiddy_hi1"],
 	triggers: [],
 	execute: function() {
-		friendMessage("Jimmy", "dude i've got so much goin on right now");
-		friendMessage("Jimmy", "you don't wanna hear about it it's a friggin novel");
-		friendMessage("Jimmy", "unless you got a lot of time on your hands");
+		friendMessage("RiceBeans2001", "dude i've got so much goin on right now");
+		friendMessage("RiceBeans2001", "you don't wanna hear about it it's a [1]{friggin novel}");
+		friendMessage("RiceBeans2001", "unless you got a [2]{lot of time on your hands}");
+	},
+	choices: {
+		1: {
+			me: "And just like a novel, mostly fiction.",
+			after: "skiddy_taunt"
+		},
+		2: {
+			me: "For you, I'm made of time. Let's hear it.",
+			after: "skiddy_story"
+		}
 	}
 });
 Plot.addEvent({
-	code: "jimmy_kit",
-	prereqs: ["jimmy_hi1"],
+	code: "skiddy_kit",
+	prereqs: ["skiddy_hi1"],
 	triggers: [],
 	execute: function() {
-		friendMessage("Jimmy", "yo hook me up");
-		friendMessage("Jimmy", "i'm always down for beta testing");
+		friendMessage("RiceBeans2001", "yo [1]{hook me up}");
+		friendMessage("RiceBeans2001", "i'm always down for [2]{beta testing}");
+	},
+	choices: {
+		1: {
+			me: "Alright. Make sure to run this soon - I want feedback. <i>Send toolkit.exe</i>",
+			after: "skiddy_dc"
+		},
+		2: {
+			me: "What makes you qualified for a beta test? What have you accomplished recently?",
+			after: "skiddy_manage"
+		}
 	}
 });
