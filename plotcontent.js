@@ -10,12 +10,6 @@ Plot.addEvent({
 		friendMessage("Handler", "Welcome to the seedy underbelly beneath the surface of the Internet. Good luck.");
 	},
 	after: function() {
-		friends["RiceBeans2001"].online = true;
-		friends["Barcelona"].online = true;
-		friends["plood"].online = true;
-		friends["lassyfair"].online = true;
-		friends["Wherez"].online = true;
-		friends["HatSama"].online = true;
 	},
 	choices: {
 		1 : { 
@@ -35,7 +29,7 @@ Plot.addEvent({
 });
 Plot.addEvent({
 	code: "handler_cyberterror",
-	prereqs: ["init"],
+	prereqs: [],
 	triggers: [],
 	execute: function() {
 		friendMessage("Handler", "They're all various petty hackers and script kiddies. None should be a threat. Check out their (http://sneaky.link/profiles)[case profiles].");
@@ -44,7 +38,7 @@ Plot.addEvent({
 });
 Plot.addEvent({
 	code: "handler_cover",
-	prereqs: ["init"],
+	prereqs: [],
 	triggers: [],
 	execute: function() {
 		friendMessage("Handler", "Yes. Take a look at your (http://sneaky.link/cover)[cover identity].");
@@ -52,7 +46,7 @@ Plot.addEvent({
 });
 Plot.addEvent({
 	code: "handler_document",
-	prereqs: ["init"],
+	prereqs: [],
 	triggers: [],
 	execute: function() {
 		friendMessage("Handler", "That information is very highly classified. Unfortunately, we are unable to give you more than that.");
@@ -61,7 +55,7 @@ Plot.addEvent({
 });
 Plot.addEvent({
 	code: "group_hello",
-	prereqs: ["init"],
+	prereqs: [],
 	triggers: [],
 	execute: function() {},
 	target: "Group",
@@ -198,7 +192,7 @@ Plot.addEvent({
 });
 Plot.addEvent({
 	code: "hi_to_skiddy",
-	prereqs: ["init"],
+	prereqs: [],
 	triggers: [],
 	execute: function() {},
 	target: "RiceBeans2001",
