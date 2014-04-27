@@ -57,7 +57,9 @@ Plot.triggerEvent = function(event) {
 }
 Plot.finishEvent = function(event) {
 	console.log("Finished ", event);
-	
+	if(event.after) {
+		event.after();
+	}
 	var evIndex = this.events.indexOf(event);
 	if(evIndex != -1)
 		this.events.splice(evIndex, 1); // in case it's still there somehow
