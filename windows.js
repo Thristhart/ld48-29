@@ -41,6 +41,13 @@ var FakeWindow = function(menuname) {
 	this.element.dataset.menuname = menuname;
 	document.body.appendChild(this.element);
 }
+
+FakeWindow.prototype.reRender = function() {
+	this.element.removeChild(this.element.container);
+	this.element.container = this.buildBody();
+	this.element.appendChild(this.element.container);
+}
+
 FakeWindow.prototype.buildElement = function() {
 	var window = this;
 	var base = document.createElement("div");
@@ -76,13 +83,17 @@ FakeWindow.prototype.buildElement = function() {
 	base.titlebar.appendChild(base.maximizeButton);
 	
 	base.appendChild(base.titlebar);
-	base.appendChild(this.buildBody());
+	base.container = this.buildBody();
+	base.appendChild(base.container);
 	
 	$(base).click(function() {
-		if(focusTarget) {
+		if(focusTarget && focusTarget != base) {
 			focusTarget.style.zIndex = 0;
+			taskbar.unhighlight(focusTarget);
 		}
 		base.style.zIndex = 100; // above everything
+		if(focusTarget != base)
+			taskbar.highlight(base);
 		focusTarget = base;
 	});
 	$(base).on('drag', function() {

@@ -2,14 +2,14 @@ function Taskbar() {
 	this.element = $("#taskbar")[0];
 }
 Taskbar.prototype.buttonClicked = function(button) {
-	openWindow(button.innerHTML);
+	openfakeWindow(button.innerHTML);
 }
-Taskbar.prototype.addButton = function(window) {
+Taskbar.prototype.addButton = function(fakeWindow) {
 	var button = document.createElement("a");
 	var tbar = this;
 	
-	button.innerHTML = window.menuname;
-	button.className = window.menuname;
+	button.innerHTML = fakeWindow.menuname;
+	button.className = fakeWindow.menuname;
 	
 	this.element.appendChild(button);
 	
@@ -18,9 +18,20 @@ Taskbar.prototype.addButton = function(window) {
 	});
 }
 
-Taskbar.prototype.removeButton = function(window) {
-	var selector = "#taskbar :contains('" + window.menuname + "')";
+Taskbar.prototype.removeButton = function(fakeWindow) {
+	var selector = "#taskbar :contains('" + fakeWindow.menuname + "')";
 	var butt = $(selector)[0]
 	taskbar.element.removeChild(butt);
 	delete(butt);
+}
+
+Taskbar.prototype.highlight = function(fakeWindow) {
+	var selector = "#taskbar :contains('" + fakeWindow.dataset.menuname + "')";
+	var butt = $(selector);
+	butt.addClass("focused");
+}
+Taskbar.prototype.unhighlight = function(fakeWindow) {
+	var selector = "#taskbar :contains('" + fakeWindow.dataset.menuname + "')";
+	var butt = $(selector);
+	butt.removeClass("focused");
 }

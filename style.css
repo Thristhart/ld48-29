@@ -13,7 +13,9 @@ body {
 
 #startbutton {
 	width: 3em;
-	height: 1em;
+	height: 3em;
+	background: url(images/startmenu.png);
+	background-size: 100%;
 	border: 1px solid black;
 	position: absolute;
 	bottom: 0;
@@ -24,12 +26,9 @@ body {
 	
 	z-index: 201;
 	
-	-webkit-border-top-right-radius: 100px;
-	-webkit-border-bottom-right-radius: 100px;
-	-moz-border-radius-topright: 100px;
-	-moz-border-radius-bottomright: 100px;
-	border-top-right-radius: 100px;
-	border-bottom-right-radius: 100px;
+	-webkit-border-radius: 100px;
+	-moz-border-radius: 100px;
+	border-radius: 100px;
 }
 
 #menu {
@@ -40,14 +39,14 @@ body {
 	min-height: 15em;
 	
 	position: absolute;
-	bottom: 1.1em;
+	bottom: 3em;
 	left: 0;
 	margin: 0;
 	
 	list-style: none;
 	padding: 0;
 	background-color: #dedede;
-	z-index: 201;
+	z-index: 200;
 }
 
 #menu li {
@@ -57,12 +56,15 @@ body {
 
 #taskbar {
 	position: absolute;
-	width: 100%;
 	margin: 0;
-	margin-left: 2em;
-	height: 1.1em;
+	height: 3em;
 	background-color: #dedede;
 	bottom: 0;
+	left: 0;
+	right: 0;
+	padding-left: 4em;
+	border-top: 1px solid black;
+	
 	
 	z-index: 200;
 }
@@ -77,6 +79,12 @@ body {
 	background-color: #c4c4c4;
 	margin-right: .3em;
 	float: left;
+	font-size: 2em;
+	margin-top: .1em;
+}
+
+#taskbar a.focused {
+	background-color: #E0E0E0;
 }
 
 .window {
