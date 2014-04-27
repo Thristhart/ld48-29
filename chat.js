@@ -80,13 +80,28 @@ ChatFakeWindow.prototype.buildBody = function() {
 		if(!chatWindow.currResult)
 			return;
 		meMessage(chatWindow.friend, chatWindow.currResult.me);
-		if(chatWindow.currResult.event && chatWindow.currResult.event.remove_choices) {
+		if(chatWindow.currResult.event && chatWindow.currResult.event.choices || chatWindow.currResult.event.self_choices) {
+			if(!chatWindow.currResult.event.remove_choices) {
+				var e = chatWindow.currResult.event;
+				e.remove_choices = [];
+				if(e.choices) {
+					for(var k in e.choices) {
+						e.remove_choices.push(k);
+					}
+				}
+				if(e.self_choices) {
+					for(var k in e.self_choices) {
+						e.remove_choices.push(k.name);
+					}
+				}
+			}
 			for(var i = 0; i < chatWindow.currResult.event.remove_choices.length; i++) {
 				var select = "a.choice[href='" + chatWindow.currResult.event.remove_choices[i] + "']";
 				var c = $(container).find(select);
 				c[0].removeAttribute("href");
 				if(c[0].parentElement.className == "options") // horrible hack to identify out-of-text choices
 					c[0].parentElement.removeChild(c[0]);
+				c[0].className = "deadlink";
 				c.off("click");
 			}
 			// save our changes
@@ -127,6 +142,7 @@ ChatFakeWindow.prototype.refreshLog = function() {
 	$(".window:contains('Chat - " + chat.friend.username + "') .chatlog a.choice").click(function(event) {
 		var choice = event.target.dataset.choice;
 		var event = Plot.getEventWithCode(event.target.dataset.code);
+		console.log(choice, event);
 		var result = event.choices[choice];
 		chatWindow.inputbox.value = result.me;
 		chatWindow.currResult = result;
