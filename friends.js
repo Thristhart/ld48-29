@@ -6,13 +6,32 @@ friends["Handler"] = {
 	online: true
 };
 
-friends["Jimmy"] = {
-	username: "Jimmy",
-	profile_picture: "jimmy.png",
-	online: true
+friends["RiceBeans2001"] = {
+	username: "RiceBeans2001",
+	profile_picture: "skiddy.png",
 };
 
-friends["John Doe"] = {
-	username: "John Doe",
-	profile_picture: "blah.png"
+friends["Barcelona"] = {
+	username: "Barcelona",
+	profile_picture: "uptight.png"
+};
+
+friends["plood"] = {
+	username: "plood",
+	profile_picture: "russian.png"
+};
+
+friends["lassyfair"] = {
+	username: "lassyfair",
+	profile_picture: "anarchist.png"
+};
+
+friends["HatSama"] = {
+	username: "HatSama",
+	profile_picture: "hatsama.png"
+};
+
+friends["Wherez"] = {
+	username: "Wherez",
+	profile_picture: "cop.png"
 };
