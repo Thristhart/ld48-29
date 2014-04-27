@@ -11,8 +11,18 @@ function setup() {
 	
 	taskbar = new Taskbar();
 	
-	setInterval(function() {Plot.checkEvents()}, 500);
+	setInterval(function() {
+		Plot.checkEvents();
+		if(reRender) {
+			reRender = false;
+			for(var win in windows) {
+				windows[win].reRender();
+			}
+		}
+	}, 500);
 }
+
+var reRender = false;
 
 function register_ingame_links() {
 	$("a.ingame_link").off("click"); // make sure all click handlers are gone

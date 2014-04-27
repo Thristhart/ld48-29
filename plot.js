@@ -57,6 +57,7 @@ Plot.triggerEvent = function(event) {
 }
 Plot.finishEvent = function(event) {
 	console.log("Finished ", event);
+	reRender = true;
 	if(event.after) {
 		event.after();
 	}

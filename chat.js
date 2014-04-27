@@ -124,11 +124,18 @@ ChatFakeWindow.prototype.buildBody = function() {
 	
 	return container;
 }
+ChatFakeWindow.prototype.reRender = function() { }
 
 ChatFakeWindow.prototype.refreshLog = function() {
 	this.log.innerHTML = this.friend.log || "";
 	var chat = this;
-	chat.log.scrollTop = chat.log.scrollHeight;
+	if(!(chat.log.scrollTop = chat.log.scrollHeight)) {
+		var retry = setInterval( function() {
+			if(chat.log.scrollTop = chat.log.scrollHeight) {
+				clearInterval(retry);
+			}
+		}, 100);
+	}
 	if(chat.friend.typing) {
 		$(chat.typingMessage).show();
 		$(chat.options).hide();

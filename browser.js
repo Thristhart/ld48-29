@@ -41,6 +41,7 @@ BrowserFakeWindow.prototype.buildBody = function() {
 	
 	return container;
 }
+BrowserFakeWindow.prototype.reRender = function() { }
 
 BrowserFakeWindow.prototype.back = function() {
 	if(this.history.length == 0)
