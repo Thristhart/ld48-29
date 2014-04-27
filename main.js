@@ -20,6 +20,9 @@ function register_ingame_links() {
 		goToURL(event.target.href);
 		return false;
 	});
+	$("a").click(function(event) {
+		return false; // ensure no links ever take us out
+	});
 }
 
 document.onready = setup;
