@@ -117,10 +117,23 @@ Plot.handleAfter = function(event) {
 	this.triggerEvent(after);
 }
 
+Plot.not_run = function(eventCode) {
+	return function() {
+		for(var i = 0; i < Plot.events.length; i++) {
+			if(Plot.events[i].code == eventCode)
+				return false;
+		}
+		for(var i = 0; i < Plot.runningEvents.length; i++) {
+			if(Plot.runningEvents[i].code == eventCode)
+				return false;
+		}
+		return true;
+	};
+}
+
 Plot.checkPrereqs = function(event) {
 	if(!event.prereqs)
 		return true;
-	if
 	for(var i = 0; i < event.prereqs.length; i++) {
 		if((typeof event.prereqs[i]) == "string") {
 			var foundIt = false;
