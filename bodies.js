@@ -23,7 +23,7 @@ bodies = {
 	</div>\
 	<div class='case_profile'> \
 	<h4>plood</h4> \
-	<p><b>Real name</b>: Rusev Torvaldos</p> \
+	<p><b>Real name</b>: Rusev Torovoltos</p> \
 	<p>Quiet, insightful, and completely unintelligible. An otherwise very successful programmer held back by his broken english.</p>\
 	<p>It is difficult to understand, but our analysts think that he has been trying to find a buyer for some unnamed data. Very suspicious.</p>\
 	<p>Personal details unknown.</p>\
