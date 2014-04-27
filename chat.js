@@ -199,7 +199,8 @@ function meMessage(window, message, delay) {
 	if(!delay) delay = 4000;
 	if(!window.friend.log)
 		window.friend.log = "";
-	window.friend.log += "<b>Me</b>: " + message + "<br />";
+	if(message != "[Say nothing]")
+		window.friend.log += "<b>Me</b>: " + message + "<br />";
 	window.refreshLog();
 }
 

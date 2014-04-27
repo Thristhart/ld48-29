@@ -154,8 +154,8 @@ Plot.addEvent({
 	},
 	target: "Group",
 	self_choices: [{
-		name: "Say nothing",
-		me: "...",
+		name: "[Say nothing]",
+		me: "[Say nothing]",
 		after: "group_lassyfair_rant"
 	}, {
 		name: "Leave her alone",
@@ -171,7 +171,7 @@ Plot.addEvent({
 		groupMessage("lassyfair", "fuck off");
 		groupMessage("lassyfair", "you wanna talk about today's weather?");
 		groupMessage("lassyfair", "or you could be like hatty over there and we can gossip about boys while we do our nails?");
-		groupMessage("HatSama", "^_^;", 1000);
+		groupMessage("HatSama", "^_^;", 2000);
 		groupMessage("lassyfair", "sure I talk about THE SYSTEMATIC OPPRESSION OF OUR RIGHTS a lot, oh no");
 		groupMessage("lassyfair", "sorry for caring, damn");
 	},
