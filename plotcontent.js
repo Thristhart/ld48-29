@@ -60,6 +60,38 @@ Plot.addEvent({
 	},
 });
 Plot.addEvent({
+	code: "group_hello",
+	prereqs: ["init"],
+	triggers: [],
+	execute: function() {},
+	target: "Group",
+	self_choices: [{
+		name: "Anyone here?",
+		me: "Hey, anyone around?",
+		after: "group_greetings"
+	}]
+});
+Plot.addEvent({
+	code: "group_greetings",
+	prereqs: ["group_hello"],
+	triggers: [],
+	execute: function() {
+		groupMessage("Barcelona", "Hello.");
+		groupMessage("lassyfair", "heyyy");
+		groupMessage("plood", "here.");
+	},
+	target: "Group",
+	self_choices: [{
+		name: "How you guys doing?",
+		me: "How are you guys doing? What're you up to?",
+		after: "group_what_you_doing"
+	}, {
+		name: "Any news?",
+		me: "You guys got any news for me?",
+		after: "group_news"
+	}]
+});
+Plot.addEvent({
 	code: "hi_to_skiddy",
 	prereqs: ["init"],
 	triggers: [],
@@ -133,12 +165,37 @@ Plot.addEvent({
 });
 Plot.addEvent({
 	code: "skiddy_dc",
-	prereqs: ["skiddy_hi1"],
+	prereqs: ["skiddy_kit"],
 	triggers: [],
 	execute: function() {
 		friendMessage("RiceBeans2001", "/me received toolkit.exe");
 		friendMessage("RiceBeans2001", "alright sweet imma run this right now");
 		friendMessage("RiceBeans2001", "/me is now offline");
+	},
+	after: function() {
+		friends["RiceBeans2001"].online = false;
+	},
+	choices: {
+		1: {
+			me: "Alright. Make sure to run this soon - I want feedback.",
+			after: "skiddy_dc"
+		},
+		2: {
+			me: "What makes you qualified for a beta test? What have you accomplished recently?",
+			after: "skiddy_manage"
+		}
+	}
+});
+Plot.addEvent({
+	code: "skiddy_taunt",
+	prereqs: [""],
+	triggers: [],
+	execute: function() {
+		friendMessage("RiceBeans2001", "what the fuck did you just fucking say about me");
+		friendMessage("RiceBeans2001", "you little bitch", 1000);
+		friendMessage("RiceBeans2001", "i’ll have you know i graduated top of my class in the navy seals, and i’ve been involved in numerous secret raids on al-quaeda, and i have over 300 confirmed kills. i am trained in gorilla warfare and i’m the top sniper in the entire us armed forces. you are nothing to me but just another target. i will wipe you the fuck out with precision the likes of which has never been seen before on this earth, mark my fucking words. you think you can get away with saying that shit to me over the internet? think again, fucker. as we speak i am contacting my secret network of spies across the usa and your ip is being traced right now so you better prepare for the storm, maggot. the storm that wipes out the pathetic little thing you call your life. you’re fucking dead, kid. i can be anywhere, anytime, and i can kill you in over seven hundred ways, and that’s just with my bare hands. not only am i extensively trained in unarmed combat, but i have access to the entire arsenal of the united states marine corps and i will use it to its full extent to wipe your miserable ass off the face of the continent, you little shit. if only you could have known what unholy retribution your little “clever” comment was about to bring down upon you, maybe you would have held your fucking tongue. but you couldn’t, you didn’t, and now you’re paying the price, you goddamn idiot. i will shit fury all over you and you will drown in it. you’re fucking dead, kiddo.", 5000);
+		friendMessage("RiceBeans2001", "lol j/k i aint mad");
+		friendMessage("RiceBeans2001", "but really tho don't be [1]{a dick}");
 	},
 	after: function() {
 		friends["RiceBeans2001"].online = false;

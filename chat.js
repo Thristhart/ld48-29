@@ -16,14 +16,19 @@ function buildFriendItem(name) {
 	var profile_pic = document.createElement("img");
 	profile_pic.src = "images/" + friends[name].profile_picture;
 	profile_pic.className = "profile";
-	item.appendChild(profile_pic);
 	
-	if(friends[name].online) {
-		item.className += " online";
+	if(name != "Group")
+		item.appendChild(profile_pic);
+	
+	if(name != "Group") {
+		if(friends[name].online) {
+			item.className += " online";
+		}
+		else
+			item.className += " offline";
 	}
-	else
-		item.className += " offline";
 	item.appendChild(name_bar);
+	
 	
 	return item;
 }
@@ -38,7 +43,10 @@ FriendsFakeWindow.prototype.buildBody = function() {
 			var target = event.target;
 			if(target.tagName == "SPAN")
 				target = target.parentElement;
-			openChatWindow(friends[target.dataset.name]);
+			if(target.dataset.name == "Group")
+				openWindow("GroupChat")
+			else
+				openChatWindow(friends[target.dataset.name]);
 		});
 		this.friendslist.appendChild(item);
 	}
@@ -50,6 +58,7 @@ FriendsFakeWindow.prototype.buildBody = function() {
 function ChatFakeWindow(menuname, friendName) {
 	this.friend = friends[friendName];
 	FakeWindow.call(this, menuname);
+	$(this.element).addClass("chat");
 }
 $.extend(true, ChatFakeWindow.prototype, FakeWindow.prototype);
 
@@ -79,7 +88,7 @@ ChatFakeWindow.prototype.buildBody = function() {
 	$(this.sendButton).click(function() {
 		if(!chatWindow.currResult)
 			return;
-		meMessage(chatWindow.friend, chatWindow.currResult.me);
+		meMessage(chatWindow, chatWindow.currResult.me);
 		if(chatWindow.currResult.event && chatWindow.currResult.event.choices || chatWindow.currResult.event.self_choices) {
 			if(!chatWindow.currResult.event.remove_choices) {
 				var e = chatWindow.currResult.event;
@@ -163,11 +172,17 @@ ChatFakeWindow.prototype.refreshLog = function() {
 		link.href = opts[i].name;
 		link.innerHTML = opts[i].name;
 		link.className = "choice";
-		var text = opts[i].me;
-		var result = opts[i];
-		$(link).click(function() {
-			chatWindow.inputbox.value = text;
-			chatWindow.currResult = result;
+		link.dataset.text = opts[i].me;
+		link.dataset.eventcode = opts[i].event.code;
+		$(link).click(function(clickEvent) {
+			chatWindow.inputbox.value = clickEvent.target.dataset.text;
+			var event = Plot.getEventWithCode(clickEvent.target.dataset.eventcode);
+			for(var j = 0; j < event.self_choices.length; j++) {
+				if(event.self_choices[j].name == clickEvent.target.innerHTML) {
+					chatWindow.currResult = event.self_choices[j];
+				}
+			}
+			chatWindow.currResult.event = event;
 			return false;
 		});
 		chatWindow.options.appendChild(link);
@@ -180,12 +195,12 @@ function openChatWindow(friend) {
 	return openWindow("Chat - " + friend.username);
 }
 
-function meMessage(friend, message, delay) {
+function meMessage(window, message, delay) {
 	if(!delay) delay = 4000;
-	if(!friend.log)
-		friend.log = "";
-	friend.log += "<b>Me</b>: " + message + "<br />";
-	openChatWindow(friend).refreshLog();
+	if(!window.friend.log)
+		window.friend.log = "";
+	window.friend.log += "<b>Me</b>: " + message + "<br />";
+	window.refreshLog();
 }
 
 var messageQueue = [];
@@ -206,6 +221,16 @@ function friendMessage(friendName, message, delay) {
 		currentMessageInterval = setTimeout(processMessageQueue, delay);
 	}
 	return;
+}
+
+function groupMessage(friendName, message, delay) {
+	if(!delay) delay = 1000;
+
+	var sourceEvent = arguments.callee.caller.parent; // THIS IS BY FAR THE WORST THING I'VE EVER DONE
+	messageQueue.push([friendName, processMessageMarkup(sourceEvent, message), delay, true]);
+	if(!currentMessageInterval) {
+		currentMessageInterval = setTimeout(processMessageQueue, delay);
+	}
 }
 
 function processMessageMarkup(event, message) {
@@ -238,35 +263,54 @@ function processMessageQueue() {
 	var friendName = msg[0];
 	var message = msg[1];
 	var delay = msg[2];
+	var is_group = msg[3];
+	console.log(friendName, message, delay, is_group);
 	if(friendName == "FINISHEVENT") {
 		message.finished = true;
-		if(message.target)
+		if(message.target && message.target != "Group")
 			openChatWindow(friends[message.target]).refreshLog();
 	}
 	else {
 		var friend = friends[friendName];
-		if(!friend.log)
-			friend.log = "";
-		
-		var connector = " ";
-		if(message.match(/^\/me/)) {
-			message = message.replace("/me", "");
-			message += "</i>";
-			friend.log += "<i>";
+		if(is_group) {
+			var group = openWindow("GroupChat");
+			var connector = " ";
+			if(message.match(/^\/me/)) {
+				message = message.replace("/me", "");
+				message += "</i>";
+				group.friend.log += "<i>";
+			}
+			else {
+				connector = ": ";
+			}
+			group.friend.log += buildChatFriendName(friend) + connector + message + "<br />";
+			
+			group.refreshLog();
 		}
-		else {
-			connector = ": ";
+		else {	
+			if(!friend.log)
+				friend.log = "";
+			
+			var connector = " ";
+			if(message.match(/^\/me/)) {
+				message = message.replace("/me", "");
+				message += "</i>";
+				friend.log += "<i>";
+			}
+			else {
+				connector = ": ";
+			}
+			friend.log += buildChatFriendName(friend) + connector + message + "<br />";
+			
+			
+			var anyLeft = false;
+			for(var i = 0; i < messageQueue.length; i++) {
+				if(messageQueue[i][0] == friendName)
+					anyLeft = true;
+			}
+			if(!anyLeft) friends[friendName].typing = false;
+			openChatWindow(friend).refreshLog();
 		}
-		friend.log += buildChatFriendName(friend) + connector + message + "<br />";
-		
-		
-		var anyLeft = false;
-		for(var i = 0; i < messageQueue.length; i++) {
-			if(messageQueue[i][0] == friendName)
-				anyLeft = true;
-		}
-		if(!anyLeft) friends[friendName].typing = false;
-		openChatWindow(friend).refreshLog();
 	}
 	if(messageQueue.length > 0)
 		currentMessageInterval = setTimeout(processMessageQueue, messageQueue[0][2]);
@@ -274,4 +318,18 @@ function processMessageQueue() {
 
 function buildChatFriendName(friend) {
 	return "<b>" + friend.username + "</b>";
+}
+
+function GroupChatFakeWindow(menuname) {
+	ChatFakeWindow.call(this, menuname, "Group");
+}
+$.extend(true, GroupChatFakeWindow.prototype, ChatFakeWindow.prototype);
+
+GroupChatFakeWindow.prototype.oldBuildBody = GroupChatFakeWindow.prototype.buildBody;
+GroupChatFakeWindow.prototype.buildBody = function() {
+	var elem = this.oldBuildBody.call(this, arguments);
+	this.typingMessage.parentElement.removeChild(this.typingMessage);
+	$(this.friendProfile).removeClass("offline");
+	$(this.friendProfile).removeClass("online");
+	return elem;
 }

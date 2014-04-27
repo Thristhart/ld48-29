@@ -35,3 +35,7 @@ friends["Wherez"] = {
 	username: "Wherez",
 	profile_picture: "cop.png"
 };
+
+friends["Group"] = {
+	username: "Group",
+}

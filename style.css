@@ -286,3 +286,6 @@ img.profile {
 	right: 1em;
 	bottom: 3.2em;
 }
+.chat .options .choice {
+	margin: .5em;
+}
