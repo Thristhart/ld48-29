@@ -43,7 +43,7 @@ Plot.checkTrigger = function(trigger) {
 Plot.runEvent = function(event) {
 	this.runningEvents.push(event);
 	event.execute();
-	friendMessage("FINISHEVENT", event);
+	friendMessage("FINISHEVENT", event, 200);
 }
 
 Plot.triggerEvent = function(event) {
