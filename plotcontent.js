@@ -122,7 +122,30 @@ Plot.addEvent({
 	},
 	choices: {
 		1: {
-			me: "Alright. Make sure to run this soon - I want feedback. <i>Send toolkit.exe</i>",
+			me: "Alright. Make sure to run this soon - I want feedback.",
+			after: "skiddy_dc"
+		},
+		2: {
+			me: "What makes you qualified for a beta test? What have you accomplished recently?",
+			after: "skiddy_manage"
+		}
+	}
+});
+Plot.addEvent({
+	code: "skiddy_dc",
+	prereqs: ["skiddy_hi1"],
+	triggers: [],
+	execute: function() {
+		friendMessage("RiceBeans2001", "/me received toolkit.exe");
+		friendMessage("RiceBeans2001", "alright sweet imma run this right now");
+		friendMessage("RiceBeans2001", "/me is now offline");
+	},
+	after: function() {
+		friends["RiceBeans2001"].online = false;
+	},
+	choices: {
+		1: {
+			me: "Alright. Make sure to run this soon - I want feedback.",
 			after: "skiddy_dc"
 		},
 		2: {
