@@ -1,4 +1,5 @@
 var taskbar;
+var playername = "Smith";
 function setup() {
 	console.log("Hello, inquisitive mind!");
 	$("#startbutton").click(function(event) {
@@ -20,6 +21,18 @@ function setup() {
 			}
 		}
 	}, 500);
+}
+
+function buildSplashScreen() {
+	var splash = document.createElement("form");
+	splash.className = "splash";
+	var image = document.createElement("img");
+	image.src = "images/startmenu.png";
+	var input = document.createElement("input");
+	input.setAttribute("placeholder", "username");
+	splash.appendChild(image);
+	splash.appendChild(input);
+	return splash;
 }
 
 var reRender = false;

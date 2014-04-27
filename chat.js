@@ -200,7 +200,7 @@ function meMessage(window, message, delay) {
 	if(!window.friend.log)
 		window.friend.log = "";
 	if(message != "[Say nothing]")
-		window.friend.log += "<b>Me</b>: " + message + "<br />";
+		window.friend.log += "<b>" + playername + "</b>: " + message + "<br />";
 	window.refreshLog();
 }
 
@@ -256,6 +256,8 @@ function processMessageMarkup(event, message) {
 		var url = "<a class='ingame_link' href='" + href + "'>" + word + "</a>"
 		message = message.replace(total, url);
 	}
+	
+	message = message.replace("(name)", playername);
 	return message;
 }
 

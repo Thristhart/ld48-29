@@ -8,3 +8,9 @@ STARTMENU_ANIMATION = {
 	effect: "slide",
 	direction: "down"
 }
+
+SPLASH_ANIMATION = {
+	effect: "fade",
+	easing: "easeInExpo",
+	duration: 800
+}

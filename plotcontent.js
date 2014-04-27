@@ -1,9 +1,34 @@
 Plot.addEvent({
-	code: "init",
-	prereqs: [],
+	code: "splash",
 	triggers: [function() { return true }],
 	execute: function() {
-		friendMessage("Handler", "Hello, agent. Prepare to be briefed on your new assignment.", 100);
+		var splash = buildSplashScreen();
+		document.body.appendChild(splash);
+		$(splash).submit(function(event) {
+			var name = $(splash).find("input")[0].value;
+			if(name != "")
+				playername = name;
+			
+			var anim = SPLASH_ANIMATION;
+			anim.complete = function() {
+				setTimeout(function() {
+					Plot.finishEvent(Plot.getEventWithCode("splash"));
+				}, 1500); // give some time to take in the desktop
+			}
+			$(".splash").hide(anim);
+			return false;
+		});
+	},
+	after: function() {
+	},
+	choices: {} // make it pause
+});
+Plot.addEvent({
+	code: "init",
+	prereqs: ["splash"],
+	triggers: [function() { return true }],
+	execute: function() {
+		friendMessage("Handler", "Hello, agent (name). Prepare to be briefed on your new assignment.", 100);
 		friendMessage("Handler", "We have [2]{inserted} you into a group of six suspected [1]{cyberterrorists}.");
 		friendMessage("Handler", "Our sources have reason to believe that one of them has stolen a [3]{very sensitive document} from our servers.", 5000);
 		friendMessage("Handler", "We want you to identify which one is responsible, and either neutralize them or find evidence that we can move on.");

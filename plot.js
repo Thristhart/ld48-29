@@ -12,7 +12,7 @@ Plot.addEvent = function(event) {
 Plot.checkEvents = function() {
 	for(var i = 0; i < this.runningEvents.length; i++) {
 		if(this.runningEvents[i].finished) {
-			if(this.runningEvents[i].options || this.runningEvents[i].self_choices) {
+			if(this.runningEvents[i].choices || this.runningEvents[i].self_choices) {
 				if(this.runningEvents[i].option_selected) {
 					Plot.finishEvent(this.runningEvents[i]);
 					i--;
@@ -25,6 +25,8 @@ Plot.checkEvents = function() {
 		}
 	}
 	for(var i = 0; i < this.events.length; i++) {
+		if(!Plot.checkPrereqs(this.events[i]))
+			continue;
 		var triggers = this.events[i].triggers;
 		for(var j = 0; j < triggers.length; j++) {
 			if(this.checkTrigger(triggers[j])) {
@@ -116,6 +118,8 @@ Plot.handleAfter = function(event) {
 }
 
 Plot.checkPrereqs = function(event) {
+	if(!event.prereqs)
+		return true;
 	for(var i = 0; i < event.prereqs.length; i++) {
 		var foundIt = false;
 		for(var j = 0; j < this.finishedEvents.length; j++) {

@@ -91,6 +91,36 @@ body {
 	background-color: #E0E0E0;
 }
 
+.splash {
+	z-index: 300;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0;
+	background-color: #00994f;
+}
+.splash input {
+	margin: auto;
+	width: 7em;
+	display: block;
+	position: absolute;
+	left: calc(50% - 3.5em);
+	top: calc(50% + 50px + 1em);
+}
+.splash img {
+	margin: auto;
+	display: block;
+	position: relative;
+	position: absolute;
+	left: calc(50% - 50px);
+	top: calc(50% - 3em);
+	-webkit-border-radius: 100px;
+	-moz-border-radius: 100px;
+	border-radius: 100px;
+}
+
 .window {
 	height: 25em;
 	width: 30em;
