@@ -269,7 +269,6 @@ function processMessageQueue() {
 	var message = msg[1];
 	var delay = msg[2];
 	var is_group = msg[3];
-	console.log(friendName, message, delay, is_group);
 	if(friendName == "FINISHEVENT") {
 		message.finished = true;
 		if(message.target && message.target != "Group")
