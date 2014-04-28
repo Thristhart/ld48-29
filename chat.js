@@ -220,7 +220,9 @@ function friendMessage(friendName, message, delay) {
 		var sourceEvent = arguments.callee.caller.parent; // THIS IS BY FAR THE WORST THING I'VE EVER DONE
 		messageQueue.push([friendName, processMessageMarkup(sourceEvent, message), delay]);
 		friends[friendName].typing = true;
-		openChatWindow(friends[friendName]).refreshLog();
+		if(windows["Chat - " + friendName]) {
+			openChatWindow(friends[friendName]).refreshLog();
+		}
 	}
 	if(!currentMessageInterval) {
 		currentMessageInterval = setTimeout(processMessageQueue, delay);

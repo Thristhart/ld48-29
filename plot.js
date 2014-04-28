@@ -121,13 +121,9 @@ Plot.not_run = function(eventCode) {
 	return function() {
 		for(var i = 0; i < Plot.events.length; i++) {
 			if(Plot.events[i].code == eventCode)
-				return false;
+				return true;
 		}
-		for(var i = 0; i < Plot.runningEvents.length; i++) {
-			if(Plot.runningEvents[i].code == eventCode)
-				return false;
-		}
-		return true;
+		return false;
 	};
 }
 

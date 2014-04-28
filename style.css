@@ -85,7 +85,8 @@ body {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	border: 1px solid black;
-	min-width: 5em;
+	/*min-width: 5em;*/
+	min-height: 3em;
 	text-align: center;
 	background-color: #c4c4c4;
 	margin-right: .3em;
